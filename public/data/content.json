@@ -1,0 +1,127 @@
+{
+  "videos": [
+    {
+      "title": "Como trocar o gás com segurança",
+      "description": "Passo a passo para substituir o botijão sem riscos.",
+      "category": "Manutenção",
+      "tag": "Casa",
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "title": "Desentupir pia simples",
+      "description": "Técnicas básicas com itens do dia a dia.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "link": "#"
+    },
+    {
+      "title": "Verificar fechadura da porta",
+      "description": "Checklist de segurança para sua casa.",
+      "category": "Segurança",
+      "tag": "Proteção",
+      "link": "#"
+    },
+    {
+      "title": "Trocar lâmpada com segurança",
+      "description": "Desligue a energia e siga estes passos.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "link": "#"
+    }
+  ],
+  "cursos": [
+    {
+      "title": "Defesa pessoal básica",
+      "description": "Técnicas introdutórias de proteção e autoconfiança.",
+      "category": "Defesa pessoal",
+      "tag": "Gratuito",
+      "link": "#"
+    },
+    {
+      "title": "Informática para iniciantes",
+      "description": "Word, Excel e navegação na internet.",
+      "category": "Tecnologia",
+      "tag": "Gratuito",
+      "link": "#"
+    },
+    {
+      "title": "Educação financeira",
+      "description": "Organize suas finanças e planeje o futuro.",
+      "category": "Finanças",
+      "tag": "Gratuito",
+      "link": "#"
+    },
+    {
+      "title": "Empreendedorismo feminino",
+      "description": "Do planejamento à abertura do negócio.",
+      "category": "Empreendedorismo",
+      "tag": "Gratuito",
+      "link": "#"
+    }
+  ],
+  "empregos": [
+    {
+      "title": "Assistente administrativa",
+      "description": "Empresa parceira · Centro · Meio período",
+      "category": "Administração",
+      "tag": "Vaga exclusiva",
+      "link": "#"
+    },
+    {
+      "title": "Atendente de telemarketing",
+      "description": "Home office · Treinamento incluso",
+      "category": "Atendimento",
+      "tag": "Vaga exclusiva",
+      "link": "#"
+    },
+    {
+      "title": "Auxiliar de educação infantil",
+      "description": "Creche parceira · Período integral",
+      "category": "Educação",
+      "tag": "Vaga exclusiva",
+      "link": "#"
+    }
+  ],
+  "pois": [
+    {
+      "name": "DEAM Centro",
+      "category": "DEAM",
+      "lat": -23.5505,
+      "lng": -46.6333,
+      "address": "Rua da Consolação, 1000 — Centro",
+      "phone": "190"
+    },
+    {
+      "name": "Hospital das Mulheres",
+      "category": "Hospital",
+      "lat": -23.5489,
+      "lng": -46.6388,
+      "address": "Av. Dr. Arnaldo, 500",
+      "phone": "(11) 3066-7000"
+    },
+    {
+      "name": "ONG Mulheres em Rede",
+      "category": "ONG",
+      "lat": -23.552,
+      "lng": -46.63,
+      "address": "Rua Augusta, 2000",
+      "phone": "(11) 3229-8000"
+    },
+    {
+      "name": "Delegacia da Mulher",
+      "category": "Delegacia",
+      "lat": -23.547,
+      "lng": -46.641,
+      "address": "Rua Brigadeiro Tobias, 150",
+      "phone": "197"
+    },
+    {
+      "name": "Centro de Acolhimento Maria da Penha",
+      "category": "ONG",
+      "lat": -23.555,
+      "lng": -46.628,
+      "address": "Rua dos Pinheiros, 800",
+      "phone": "180"
+    }
+  ]
+}

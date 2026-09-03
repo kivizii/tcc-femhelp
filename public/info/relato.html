@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar relato — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Registrar relato</h1>
+    <p class="page-subtitle">Histórico de denúncias alinhado à LGPD</p>
+
+    <div class="alert alert--warning">
+      Este registro é confidencial e não substitui canais oficiais de denúncia (180, DEAM, 190).
+      Seus dados são tratados conforme a LGPD e só são acessíveis por você.
+    </div>
+
+    <form class="card" id="relato-form">
+      <div class="form-group">
+        <label class="form-label" for="data">Data aproximada do ocorrido</label>
+        <input class="form-input" type="date" id="data" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="tipo">Tipo de violência</label>
+        <select class="form-select" id="tipo" required>
+          <option value="">Selecione</option>
+          <option value="fisica">Física</option>
+          <option value="psicologica">Psicológica</option>
+          <option value="sexual">Sexual</option>
+          <option value="patrimonial">Patrimonial</option>
+          <option value="moral">Moral</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="descricao">Descrição do ocorrido</label>
+        <textarea class="form-textarea" id="descricao" required placeholder="Descreva o que aconteceu..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">
+          <input type="checkbox" id="consent" required>
+          Autorizo o registro destes dados conforme a política de privacidade
+        </label>
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">Registrar relato</button>
+    </form>
+
+    <div id="relatos-salvos" class="mt-lg"></div>
+  </main>
+
+  <script>
+    document.addEventListener("femhelp:ready", () => {
+      const form = document.getElementById("relato-form");
+      const listEl = document.getElementById("relatos-salvos");
+      const user = window.FH.getCurrentUser();
+
+      function renderRelatos() {
+        if (!user) {
+          listEl.innerHTML = '<p class="text-muted">Faça login para ver seus relatos salvos.</p>';
+          return;
+        }
+        const relatos = window.FH.storage.get(`relatos_${user.uid}`, []);
+        if (relatos.length === 0) {
+          listEl.innerHTML = '<p class="text-muted">Nenhum relato registrado.</p>';
+          return;
+        }
+        listEl.innerHTML = '<h2 class="section-title">Seus relatos</h2>' + relatos.map(r => `
+          <div class="card">
+            <p class="card__text"><strong>${r.tipo}</strong> — ${r.data}</p>
+            <p class="card__text">${r.descricao}</p>
+          </div>
+        `).join("");
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!user) {
+          alert("Faça login para registrar um relato.");
+          window.location.href = window.FH.asset("auth/login.html");
+          return;
+        }
+        const relato = {
+          data: form.data.value,
+          tipo: form.tipo.options[form.tipo.selectedIndex].text,
+          descricao: form.descricao.value.trim(),
+          createdAt: new Date().toISOString(),
+        };
+        const relatos = window.FH.storage.get(`relatos_${user.uid}`, []);
+        relatos.unshift(relato);
+        window.FH.storage.set(`relatos_${user.uid}`, relatos);
+        form.reset();
+        alert("Relato registrado com segurança.");
+        renderRelatos();
+      });
+
+      renderRelatos();
+    });
+  </script>
+</body>
+</html>

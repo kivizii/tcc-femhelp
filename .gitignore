@@ -1,0 +1,33 @@
+# Segredos e ambiente
+.env
+.env.local
+*.pem
+credentials.json
+serviceAccountKey.json
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependências (se adicionar tooling depois)
+node_modules/
+
+# Config Firebase local (credenciais)
+public/js/firebase-config.local.js

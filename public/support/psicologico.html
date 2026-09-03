@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apoio psicológico — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Apoio psicológico</h1>
+    <p class="page-subtitle">Atendimento para ansiedade, autoestima e violência psicológica</p>
+
+    <div class="card">
+      <h2 class="card__title">Temas de atendimento</h2>
+      <ul class="card__text">
+        <li>Ansiedade e medo</li>
+        <li>Autoestima e autoconfiança</li>
+        <li>Violência psicológica</li>
+        <li>Apoio emocional geral</li>
+      </ul>
+    </div>
+
+    <div class="alert alert--info">
+      Seu sigilo é garantido. Os dados deste formulário são tratados conforme a LGPD.
+    </div>
+
+    <form class="card" id="psico-form">
+      <h2 class="section-title">Solicitar encaminhamento</h2>
+      <div class="form-group">
+        <label class="form-label" for="nome">Nome (pode ser apelido)</label>
+        <input class="form-input" type="text" id="nome" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contato">Telefone ou e-mail</label>
+        <input class="form-input" type="text" id="contato" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="motivo">Como podemos ajudar?</label>
+        <textarea class="form-textarea" id="motivo" required placeholder="Descreva brevemente sua necessidade"></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">Solicitar atendimento</button>
+    </form>
+
+    <p class="text-muted mt-md">Em crise: ligue <strong>188</strong> (CVV) ou <strong>180</strong> (Central da Mulher).</p>
+  </main>
+
+  <script>
+    document.getElementById("psico-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Solicitação enviada com sucesso. Entraremos em contato em até 48h.");
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

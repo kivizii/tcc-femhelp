@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações — FEMHELP</title>
+  <script src="js/bootstrap.js" data-depth="0"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Configurações</h1>
+    <p class="page-subtitle">Preferências e acesso à conta</p>
+
+    <ul class="settings-list">
+      <li class="settings-item">
+        <a href="auth/login.html">Entrar / Cadastrar</a>
+      </li>
+      <li class="settings-item">
+        <a href="info/privacidade.html">Privacidade e LGPD</a>
+      </li>
+      <li class="settings-item">
+        <a href="content/videos.html">Vídeos do dia a dia</a>
+      </li>
+      <li class="settings-item">
+        <a href="content/cursos.html">Cursos gratuitos</a>
+      </li>
+      <li class="settings-item">
+        <a href="content/empregos.html">Oportunidades de emprego</a>
+      </li>
+      <li class="settings-item">
+        <a href="support/maes-solo.html">Apoio mães solo</a>
+      </li>
+      <li class="settings-item">
+        <a href="support/creche.html">Creche parceira</a>
+      </li>
+      <li class="settings-item">
+        <a href="support/psicologico.html">Apoio psicológico</a>
+      </li>
+      <li class="settings-item">
+        <a href="community/chat.html">Chat feminino</a>
+      </li>
+      <li class="settings-item">
+        <a href="community/mural.html">Mural de relatos</a>
+      </li>
+      <li class="settings-item">
+        <a href="info/sede.html">Sede de segurança</a>
+      </li>
+      <li class="settings-item">
+        <a href="info/relato.html">Registrar relato</a>
+      </li>
+    </ul>
+
+    <button type="button" class="btn btn--ghost btn--block mt-lg hidden" id="btn-logout">Sair da conta</button>
+  </main>
+
+  <script>
+    document.addEventListener("femhelp:ready", () => {
+      const user = window.FH.getCurrentUser();
+      const logoutBtn = document.getElementById("btn-logout");
+      if (user && logoutBtn) {
+        logoutBtn.classList.remove("hidden");
+        logoutBtn.addEventListener("click", async () => {
+          await window.FH.logout();
+          window.location.href = window.FH.asset("index.html");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
