@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mural de relatos — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/mural.js"></script>
+</head>
+<body data-page="mural">
+  <main class="app-shell">
+    <h1 class="page-title">Mural de relatos</h1>
+    <p class="page-subtitle">Histórias de superação, coragem e recomeço</p>
+
+    <div id="mural-posts" aria-live="polite"></div>
+
+    <section class="card mt-lg">
+      <h2 class="section-title">Compartilhar sua história</h2>
+      <form id="mural-form">
+        <div class="form-group">
+          <label class="form-label" for="text">Seu relato</label>
+          <textarea class="form-textarea" id="text" name="text" required placeholder="Sua história pode inspirar outras mulheres..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Publicar</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

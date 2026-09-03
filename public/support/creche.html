@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creche parceira — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Creche parceira</h1>
+    <p class="page-subtitle">Apoio para mães que trabalham ou estudam</p>
+
+    <div class="alert alert--info">
+      Serviço em parceria com creches credenciadas. Sujeito à disponibilidade de vagas na sua região.
+    </div>
+
+    <div class="card">
+      <h2 class="card__title">Como funciona</h2>
+      <p class="card__text">A FEMHELP conecta mães a creches parceiras com condições especiais. Preencha o formulário de interesse e nossa equipe entrará em contato.</p>
+    </div>
+
+    <form class="card" id="creche-form">
+      <h2 class="section-title">Manifestar interesse</h2>
+      <div class="form-group">
+        <label class="form-label" for="nome">Seu nome</label>
+        <input class="form-input" type="text" id="nome" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="filhos">Idade dos filhos</label>
+        <input class="form-input" type="text" id="filhos" placeholder="Ex: 2 anos, 5 anos" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regiao">Região / bairro</label>
+        <input class="form-input" type="text" id="regiao" required>
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">Enviar interesse</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById("creche-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Interesse registrado! Nossa equipe entrará em contato em breve.");
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Entrar</h1>
+    <p class="page-subtitle">Acesse sua conta FEMHELP</p>
+
+    <div class="alert alert--info" id="demo-notice">
+      Modo demonstração ativo. Crie uma conta para testar localmente.
+    </div>
+
+    <form id="login-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input class="form-input" type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Senha</label>
+        <input class="form-input" type="password" id="password" name="password" required autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres">
+      </div>
+      <p class="form-error hidden" id="login-error" role="alert"></p>
+      <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+    </form>
+
+    <p class="text-center mt-lg">
+      Não tem conta? <a href="cadastro.html">Cadastre-se</a>
+    </p>
+  </main>
+
+  <script>
+    document.addEventListener("femhelp:ready", () => {
+      const form = document.getElementById("login-form");
+      const errEl = document.getElementById("login-error");
+
+      if (window.FH.demoMode) {
+        document.getElementById("demo-notice")?.classList.remove("hidden");
+      } else {
+        document.getElementById("demo-notice")?.classList.add("hidden");
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        errEl.classList.add("hidden");
+
+        const email = form.email.value.trim();
+        const password = form.password.value;
+
+        if (!window.FH.validateEmail(email)) {
+          errEl.textContent = "E-mail inválido.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+
+        try {
+          await window.FH.login({ email, password });
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get("redirect");
+          window.location.href = redirect || window.FH.asset("index.html");
+        } catch (err) {
+          errEl.textContent = err.message || "Erro ao entrar.";
+          errEl.classList.remove("hidden");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

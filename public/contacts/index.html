@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatos de confiança — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/contacts.js"></script>
+</head>
+<body data-page="contacts">
+  <main class="app-shell">
+    <h1 class="page-title">Contatos de confiança</h1>
+    <p class="page-subtitle">Pessoas que serão alertadas em caso de emergência</p>
+
+    <div id="contact-list" aria-live="polite"></div>
+
+    <section class="card mt-lg">
+      <h2 class="section-title" id="form-title">Novo contato</h2>
+      <form id="contact-form" novalidate>
+        <input type="hidden" id="contact-edit-id" value="">
+        <div class="form-group">
+          <label class="form-label" for="name">Nome</label>
+          <input class="form-input" type="text" id="name" name="name" required placeholder="Nome do contato">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="phone">Telefone</label>
+          <input class="form-input" type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="type">Tipo</label>
+          <select class="form-select" id="type" name="type">
+            <option value="familia">Família</option>
+            <option value="amiga">Amiga</option>
+            <option value="vizinha">Vizinha</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            <input type="checkbox" id="notifyOnSos" name="notifyOnSos" checked>
+            Notificar no SOS
+          </label>
+        </div>
+        <p class="form-error hidden" id="contact-form-error" role="alert"></p>
+        <button type="submit" class="btn btn--primary btn--block">Salvar contato</button>
+        <button type="button" class="btn btn--ghost btn--block mt-md hidden" id="contact-cancel">Cancelar edição</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

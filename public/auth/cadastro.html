@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <h1 class="page-title">Criar conta</h1>
+    <p class="page-subtitle">Cadastre-se na rede de apoio FEMHELP</p>
+
+    <form id="register-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="displayName">Nome</label>
+        <input class="form-input" type="text" id="displayName" name="displayName" required autocomplete="name" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input class="form-input" type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Senha</label>
+        <input class="form-input" type="password" id="password" name="password" required autocomplete="new-password" minlength="6" placeholder="Mínimo 6 caracteres">
+      </div>
+      <div class="form-group">
+        <label class="form-label">
+          <input type="checkbox" name="acceptPrivacy" required>
+          Li e aceito a <a href="../info/privacidade.html">política de privacidade</a>
+        </label>
+      </div>
+      <p class="form-error hidden" id="register-error" role="alert"></p>
+      <button type="submit" class="btn btn--primary btn--block">Cadastrar</button>
+    </form>
+
+    <p class="text-center mt-lg">
+      Já tem conta? <a href="login.html">Entrar</a>
+    </p>
+  </main>
+
+  <script>
+    document.addEventListener("femhelp:ready", () => {
+      const form = document.getElementById("register-form");
+      const errEl = document.getElementById("register-error");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        errEl.classList.add("hidden");
+
+        const displayName = form.displayName.value.trim();
+        const email = form.email.value.trim();
+        const password = form.password.value;
+
+        if (!displayName) {
+          errEl.textContent = "Nome é obrigatório.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+        if (!window.FH.validateEmail(email)) {
+          errEl.textContent = "E-mail inválido.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+        if (password.length < 6) {
+          errEl.textContent = "Senha deve ter no mínimo 6 caracteres.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+
+        try {
+          await window.FH.register({ email, password, displayName });
+          window.location.href = window.FH.asset("index.html");
+        } catch (err) {
+          errEl.textContent = err.message || "Erro ao cadastrar.";
+          errEl.classList.remove("hidden");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

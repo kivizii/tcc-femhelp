@@ -4,9 +4,22 @@ Plataforma de apoio, acolhimento e segurança feminina — TCC de Análise e Des
 
 **Equipe:** Heloise Vitoria · Lia Isiye · Geovana Pinto Ferreira
 
-Este repositório concentra a **documentação do plano do projeto**. A implementação do aplicativo ainda não está versionada aqui.
+Este repositório concentra a **documentação do plano** e o **código do aplicativo web** (pasta `public/`).
 
 Documentação acadêmica completa (texto organizado, sem duplicatas do material original): [docs/Plano-Projeto-FEMHELP.docx](docs/Plano-Projeto-FEMHELP.docx). O mesmo conteúdo em Markdown, usado para gerar o DOCX, está em [docs/conteudo-plano.md](docs/conteudo-plano.md). A fonte original em PDF permanece em [tcc.pdf](tcc.pdf).
+
+## Executar o app localmente
+
+```powershell
+npx --yes serve public -p 3000
+```
+
+Abra `http://localhost:3000`. O app roda em **modo demonstração** com `localStorage` — o Firebase aparece no projeto apenas como **referência arquitetural** para a simulação do TCC, sem projeto real configurado.
+
+## Deploy
+
+- **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`.
+- **Firebase Hosting:** `firebase deploy --only hosting` (requer Firebase CLI e projeto configurado).
 
 ## Sumário
 
@@ -18,6 +31,7 @@ Documentação acadêmica completa (texto organizado, sem duplicatas do material
 - [Banco de dados e testes](#banco-de-dados-e-testes)
 - [Roadmap](#roadmap)
 - [Backlog no Linear](#backlog-no-linear)
+- [Executar o app](#executar-o-app-localmente)
 - [Status do repositório](#status-do-repositório)
 
 ## O que é a FEMHELP
@@ -126,6 +140,12 @@ Fluxo de issues (andamento, conclusões, integração com Git): skill [`.cursor/
 
 ## Status do repositório
 
-Documentação do plano e da identidade do produto. Código da aplicação, Firebase e protótipo Figma ainda não fazem parte deste repositório.
+| Área | Status |
+| --- | --- |
+| Documentação acadêmica | ✅ Plano, DOCX, PDF |
+| App web (`public/`) | ✅ HTML/CSS/JS implementado |
+| Firebase | 📋 Referência de simulação (schema e regras de exemplo) |
+| Testes | 📋 Checklist em [docs/testes-checklist.md](docs/testes-checklist.md) |
+| Defesa | 📋 Roteiro em [docs/roteiro-defesa.md](docs/roteiro-defesa.md) |
 
 Para o texto acadêmico completo (conclusões, aprendizados, exemplos de uso e detalhamento de testes), use o [DOCX](docs/Plano-Projeto-FEMHELP.docx).
