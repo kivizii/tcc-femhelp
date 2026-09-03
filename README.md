@@ -17,6 +17,7 @@ Documentação acadêmica completa (texto organizado, sem duplicatas do material
 - [Stack prevista](#stack-prevista)
 - [Banco de dados e testes](#banco-de-dados-e-testes)
 - [Roadmap](#roadmap)
+- [Backlog no Linear](#backlog-no-linear)
 - [Status do repositório](#status-do-repositório)
 
 ## O que é a FEMHELP
@@ -96,6 +97,32 @@ Melhorias futuras (detalhadas no DOCX):
 - Conteúdo educativo sobre tipos de violência e canais oficiais
 - Saída rápida para página neutra
 - Notificações, PWA / app nativo, painel administrativo, geolocalização e HTTPS
+
+## Backlog no Linear
+
+O planejamento de implementação (epics, tarefas, milestones e prioridades) está no **Linear**, no projeto [FEMHELP](https://linear.app/tcc-femhelp/project/femhelp-d9fb9ef10605), team **Tcc-femhelp**.
+
+| Milestone | Foco |
+| --- | --- |
+| M0-Setup | Estrutura do app, Firebase, design tokens, Figma |
+| M1-MVP-Seguranca | SOS, contatos, autenticação, LGPD |
+| M2-Features | Mapa, conteúdo, apoio social, chat, mural |
+| M3-Testes | Qualidade, integração e regressão |
+| M4-Roadmap | PWA, painel admin, IA, melhorias futuras |
+
+**Labels:** `epic`, `feat`, `setup`, `ux`, `firebase`, `security`, `test`, `roadmap`, `docs`
+
+### Conectar o Linear ao Cursor (MCP)
+
+O repositório inclui [`.cursor/mcp.json`](.cursor/mcp.json) com o servidor oficial do Linear. Para usar o agente do Cursor para criar ou consultar issues:
+
+1. Abra `Ctrl+Shift+J` → **MCP** e verifique o servidor **linear**.
+2. Na primeira vez, complete o login OAuth no navegador.
+3. Se o status ficar vermelho, desabilite e reabilite o servidor ou reinicie o Cursor.
+
+Cada integrante da equipe autentica no próprio Cursor. Não commite API keys no repositório.
+
+Fluxo de issues (andamento, conclusões, integração com Git): skill [`.cursor/skills/linear-workflow/SKILL.md`](.cursor/skills/linear-workflow/SKILL.md).
 
 ## Status do repositório
 

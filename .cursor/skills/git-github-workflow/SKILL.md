@@ -85,6 +85,8 @@ Não commitar: `.env`, chaves, tokens, `credentials.json`, segredos. Avisar se a
 5. Depois do merge: `git checkout main` + `git pull origin main`. Apagar a branch remota se o GitHub não apagou: `git push origin --delete nome-da-branch`.
 6. Conflitos: atualizar a branch com `git fetch` + `git merge origin/main` (não rebase em branch já compartilhada, a menos que a equipe peça). Resolver, testar, commitar, push.
 
+Issues e andamento no Linear: seguir [linear-workflow](../linear-workflow/SKILL.md) (referenciar `TCC-XXX` na branch/PR quando aplicável).
+
 ## Checklist rápido
 
 - [ ] Branch criada de `main` atualizado, com nome `prefixo/desenvolvedor/descricao`
