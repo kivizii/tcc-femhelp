@@ -16,6 +16,12 @@
     depth,
   };
 
+  const favicon = document.createElement("link");
+  favicon.rel = "icon";
+  favicon.type = "image/svg+xml";
+  favicon.href = root + "assets/favicon.svg";
+  document.head.appendChild(favicon);
+
   const styles = ["css/tokens.css", "css/base.css", "css/components.css"];
   styles.forEach((href) => {
     const link = document.createElement("link");
@@ -38,6 +44,7 @@
 
   const coreScripts = [
     "js/firebase-config.js",
+    "js/icons.js",
     "js/nav.js",
     "js/quick-exit.js",
     "js/auth.js",

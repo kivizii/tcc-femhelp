@@ -36,12 +36,15 @@ svg {
 }
 
 a {
-  color: var(--color-lilas-escuro);
-  text-decoration: none;
+  color: var(--color-texto);
+  text-decoration: underline;
+  text-decoration-color: var(--color-lilas);
+  text-underline-offset: 2px;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--color-lilas-escuro);
+  text-decoration-color: var(--color-lilas-escuro);
 }
 
 button,

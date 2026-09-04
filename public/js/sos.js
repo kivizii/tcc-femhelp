@@ -155,7 +155,7 @@ window.FH.initSosPage = function () {
       try {
         const { event, contacts } = await window.FH.triggerSos(coords);
         if (statusEl) {
-          statusEl.innerHTML = `<div class="sos-status"><div class="sos-status__icon">✅</div><p><strong>SOS acionado com sucesso.</strong></p><p class="text-muted">Seus contatos foram notificados.</p></div>`;
+          statusEl.innerHTML = `<div class="sos-status"><div class="sos-status__icon">${window.FH.icon("check", "icon icon--status")}</div><p><strong>SOS acionado com sucesso.</strong></p><p class="text-muted">Seus contatos foram notificados.</p></div>`;
         }
         if (notifiedEl) {
           notifiedEl.innerHTML =

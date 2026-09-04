@@ -43,6 +43,17 @@ Executar antes da defesa do TCC. Marcar cada item após validação.
 - [ ] Confirmação anti-acidental funciona
 - [ ] Saída rápida acessível em 1 toque
 
+## 10.6.1 — Contraste e acessibilidade visual
+
+Ver ratios detalhados em [`design-system.md`](design-system.md#acessibilidade-wcag-aa).
+
+- [ ] Texto principal legível sobre fundo branco-gelo
+- [ ] Texto suave legível sobre fundos claros
+- [ ] Botão SOS com contraste texto/fundo ≥ 4.5:1
+- [ ] Links de conteúdo legíveis (cor texto, não lilás escuro)
+- [ ] Touch targets ≥ 44px em botões e navegação
+- [ ] Foco visível (`:focus-visible`) em elementos interativos
+
 ## 10.7 — Integração UI + JS + dados
 
 - [ ] Cadastro → login → home
