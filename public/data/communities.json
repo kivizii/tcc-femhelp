@@ -1,0 +1,68 @@
+{
+  "communities": [
+    {
+      "id": "amizade",
+      "name": "Amizade e acolhimento",
+      "description": "Faça amizades e encontre apoio emocional",
+      "type": "chat",
+      "icon": "heart",
+      "seedMessages": [
+        { "author": "Ana", "text": "Você não está sozinha. Estamos aqui para ouvir.", "own": false },
+        { "author": "Marina", "text": "Alguém quer conversar hoje? Estou aqui.", "own": false }
+      ]
+    },
+    {
+      "id": "maes-solo",
+      "name": "Mães solo",
+      "description": "Troca de experiências e apoio na maternidade",
+      "type": "chat",
+      "icon": "heart",
+      "seedMessages": [
+        { "author": "Carla", "text": "Ser mãe solo é desafiador, mas juntas somos mais fortes.", "own": false },
+        { "author": "Juliana", "text": "Alguém tem dicas de conciliar trabalho e filhos?", "own": false }
+      ]
+    },
+    {
+      "id": "alertas",
+      "name": "Alertas de segurança",
+      "description": "Avisos e informações de segurança na região",
+      "type": "alert",
+      "icon": "alert",
+      "seedMessages": [
+        { "author": "Moderação", "text": "Use este espaço para compartilhar alertas de segurança com cuidado e responsabilidade.", "own": false },
+        { "author": "Paula", "text": "Vi movimentação suspeita perto da estação ontem à noite. Fiquem atentas.", "own": false }
+      ]
+    },
+    {
+      "id": "superacao",
+      "name": "Superação e bem-estar",
+      "description": "Histórias de força, autocuidado e recomeços",
+      "type": "chat",
+      "icon": "chat",
+      "seedMessages": [
+        { "author": "Renata", "text": "Hoje consegui dar um passo importante na minha jornada. Queria compartilhar com vocês.", "own": false }
+      ]
+    },
+    {
+      "id": "direitos",
+      "name": "Direitos e orientação",
+      "description": "Informações sobre direitos e canais de apoio",
+      "type": "chat",
+      "icon": "books",
+      "seedMessages": [
+        { "author": "Fernanda", "text": "Alguém já usou o canal 180? Como foi a experiência?", "own": false }
+      ]
+    },
+    {
+      "id": "novas-na-rede",
+      "name": "Novas na rede",
+      "description": "Boas-vindas e primeiras conversas",
+      "type": "chat",
+      "icon": "contacts",
+      "seedMessages": [
+        { "author": "Lúcia", "text": "Oi! Acabei de chegar. Que bom encontrar este espaço.", "own": false },
+        { "author": "Beatriz", "text": "Seja bem-vinda! Conte um pouco sobre você quando quiser.", "own": false }
+      ]
+    }
+  ]
+}

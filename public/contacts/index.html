@@ -9,24 +9,35 @@
 <body data-page="contacts">
   <main class="app-shell">
     <h1 class="page-title">Contatos de confiança</h1>
-    <p class="page-subtitle">Pessoas que serão alertadas em caso de emergência</p>
+    <p class="page-subtitle">Quem você ama pode te ajudar em um momento difícil. Cadastre pessoas que serão alertadas no SOS.</p>
 
-    <div id="contact-list" aria-live="polite"></div>
+    <div class="alert alert--info contacts-privacy-note">
+      Seus contatos ficam guardados com segurança e só são usados quando você acionar o SOS.
+    </div>
 
-    <section class="card mt-lg">
+    <section class="contacts-list-section" aria-label="Lista de contatos">
+      <div class="contacts-list-header hidden" id="contacts-list-header">
+        <h2 class="section-title contacts-list-header__title">Seus contatos</h2>
+        <p class="text-muted" id="contacts-count"></p>
+      </div>
+      <div id="contact-list" aria-live="polite"></div>
+    </section>
+
+    <section class="card contacts-form-card mt-lg" aria-label="Cadastrar contato">
       <h2 class="section-title" id="form-title">Novo contato</h2>
+      <p class="text-muted contacts-form-hint" id="form-hint">Preencha os dados de alguém de confiança.</p>
       <form id="contact-form" novalidate>
         <input type="hidden" id="contact-edit-id" value="">
         <div class="form-group">
           <label class="form-label" for="name">Nome</label>
-          <input class="form-input" type="text" id="name" name="name" required placeholder="Nome do contato">
+          <input class="form-input" type="text" id="name" name="name" required placeholder="Nome do contato" autocomplete="name">
         </div>
         <div class="form-group">
           <label class="form-label" for="phone">Telefone</label>
-          <input class="form-input" type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
+          <input class="form-input" type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999" autocomplete="tel">
         </div>
         <div class="form-group">
-          <label class="form-label" for="type">Tipo</label>
+          <label class="form-label" for="type">Tipo de vínculo</label>
           <select class="form-select" id="type" name="type">
             <option value="familia">Família</option>
             <option value="amiga">Amiga</option>
@@ -35,13 +46,13 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">
+          <label class="form-label form-label--checkbox">
             <input type="checkbox" id="notifyOnSos" name="notifyOnSos" checked>
-            Notificar no SOS
+            Notificar quando eu acionar o SOS
           </label>
         </div>
         <p class="form-error hidden" id="contact-form-error" role="alert"></p>
-        <button type="submit" class="btn btn--primary btn--block">Salvar contato</button>
+        <button type="submit" class="btn btn--primary btn--block" id="contact-submit-btn">Salvar contato</button>
         <button type="button" class="btn btn--ghost btn--block mt-md hidden" id="contact-cancel">Cancelar edição</button>
       </form>
     </section>

@@ -56,7 +56,11 @@
         await loadScript(src);
       }
       for (const src of extraScripts) {
-        await loadScript(src);
+        try {
+          await loadScript(src);
+        } catch (err) {
+          console.error(`FEMHELP: falha ao carregar ${src}`, err);
+        }
       }
       if (typeof window.FH.onReady === "function") {
         window.FH.onReady();

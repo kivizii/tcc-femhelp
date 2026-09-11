@@ -18,34 +18,80 @@ Guia de identidade visual do app FEMHELP. Fonte de verdade no código: [`public/
 
 ## Paleta de cores
 
+Paleta **rosa e cinza** (intensidade média). **Vermelho exclusivo do botão SOS** (`.btn--sos`).
+
+### Rosa
+
 | Token CSS | Hex | Uso |
 |-----------|-----|-----|
-| `--color-rosa-claro` | `#f2c4d6` | Destaques suaves, banners |
-| `--color-rosa` | `#e8a4bc` | Acentos secundários |
-| `--color-nude` | `#e8d5c4` | Fundos alternativos, hover |
-| `--color-bege` | `#f5ebe0` | Fundos de cards secundários, tags |
-| `--color-branco-gelo` | `#faf8f6` | Fundo principal do app |
-| `--color-lilas` | `#c9b8d9` | Botões primários, mensagens próprias |
-| `--color-lilas-escuro` | `#9b87b8` | Ícones de atalho, estado ativo da nav |
-| `--color-cinza-claro` | `#e8e4e0` | Bordas, divisores |
-| `--color-cinza` | `#6b6560` | Texto secundário, hover neutro |
-| `--color-cinza-escuro` | `#3d3835` | — |
-| `--color-texto` | `#3d3835` | Texto principal, links |
-| `--color-texto-suave` | `#6b6560` | Subtítulos, legendas |
-| `--color-branco` | `#ffffff` | Cards, header, nav |
-| `--color-sos` | `#c0392b` | Botão SOS |
-| `--color-sos-hover` | `#a93226` | Hover do SOS |
+| `--color-rosa-claro` | `#fce8f2` | Fundos suaves, banners, gradientes |
+| `--color-rosa` | `#f0b8d0` | Botões primários, tags, chat próprio |
+| `--color-rosa-medio` | `#e891b8` | Foco, bordas ativas |
+| `--color-rosa-escuro` | `#c97596` | Nav ativa, ícones, timer, badge SOS |
+| `--color-nude` | `#f5dfe8` | Fundos alternativos |
+| `--color-bege` | alias de `rosa-claro` | Cards secundários |
+
+### Cinza
+
+| Token CSS | Hex | Uso |
+|-----------|-----|-----|
+| `--color-branco-gelo` | `#f9f7f8` | Fundo principal do app |
+| `--color-cinza-claro` | `#e8e6e8` | Bordas, divisores, saída rápida |
+| `--color-cinza` | `#7a7579` | Texto secundário |
+| `--color-cinza-escuro` | `#4a4548` | Texto forte, hover de links de emergência |
+| `--color-texto` | `#3d3838` | Texto principal, links |
+| `--color-texto-suave` | `#7a7579` | Subtítulos, legendas |
+| `--color-branco` | `#ffffff` | Header, nav, cards |
+
+### SOS (único vermelho)
+
+| Token CSS | Hex | Uso |
+|-----------|-----|-----|
+| `--color-sos` | `#c0392b` | **Somente** `.btn--sos` |
+| `--color-sos-hover` | `#a93226` | Hover do botão SOS |
 | `--color-sos-text` | `#ffffff` | Texto no botão SOS |
-| `--color-sucesso` | `#27ae60` | Confirmações |
-| `--color-alerta` | `#e67e22` | Avisos |
-| `--color-erro` | `#c0392b` | Erros de formulário |
-| `--color-info` | `#5b7c99` | Informações |
+
+### Semânticas (rosa/cinza)
+
+| Token CSS | Hex | Uso |
+|-----------|-----|-----|
+| `--color-sucesso` | `#5c6b62` | Confirmações |
+| `--color-alerta` | `#4a4548` | Avisos |
+| `--color-erro` | `#b85c7a` | Erros de formulário |
+| `--color-info` | `#6b6568` | Informações |
+
+Aliases legados: `--color-lilas` → rosa, `--color-lilas-escuro` → rosa escuro.
 
 ### Regras de uso
 
-- Tons suaves predominam; destaque forte **apenas** no SOS e alertas críticos.
+- Interface em **rosa médio + cinza**; vermelho **apenas** no botão SOS.
 - Texto principal sempre `--color-texto` sobre fundos claros.
-- Links no conteúdo usam `--color-texto` com sublinhado lilás (não usar lilás escuro como cor de link em fundo claro — ver acessibilidade).
+- Links no conteúdo usam `--color-texto` com sublinhado rosa.
+
+### Fundo decorativo
+
+Motivos florais minimalistas em rosa claro, aplicados via `background-image` em `body:not(.exit-page-body)` em [`public/css/base.css`](../public/css/base.css):
+
+| Asset | Uso |
+|-------|-----|
+| `public/assets/patterns/floral-tile.svg` | Mosaico repetível com flores e folhas — cobre a tela inteira |
+| `public/assets/patterns/floral-bloom.svg` | Flor isolada (uso em assets legados) |
+| `public/assets/patterns/floral-sprig.svg` | Ramo isolado (uso em assets legados) |
+
+Distribuição: **padrão repetido** (`background-repeat: repeat`) em duas camadas deslocadas, preenchendo toda a viewport.
+
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `--floral-fill-soft` | `#fce8f2` | Preenchimento suave nos SVGs |
+| `--floral-fill` | `#f0b8d0` | Preenchimento médio nos SVGs |
+| `--floral-opacity` | `1` | Reservado para ajuste fino futuro |
+
+Regras:
+
+- Florais em **rosa claro**, opacidade ~24–32% no SVG; nunca em vermelho.
+- Presentes em **todas as páginas do app**, exceto [`public/exit.html`](../public/exit.html) (classe `exit-page-body` — página neutra de saída rápida).
+- `background-repeat: repeat` com `background-attachment: fixed`; não interfere em toques nem contraste de texto.
+- Ocultos na impressão (`@media print`).
 
 ---
 
@@ -67,7 +113,7 @@ Guia de identidade visual do app FEMHELP. Fonte de verdade no código: [`public/
 | 400 | `--font-weight-regular` | Parágrafos |
 | 500 | `--font-weight-medium` | Labels, nav |
 | 600 | `--font-weight-semibold` | Títulos, botões |
-| 700 | `--font-weight-bold` | Alertas, timer SOS |
+| 700 | `--font-weight-bold` | Alertas, ênfase |
 
 Fonte carregada em [`public/css/base.css`](../public/css/base.css) via Google Fonts (pesos 400–700).
 
@@ -99,7 +145,7 @@ Fonte carregada em [`public/css/base.css`](../public/css/base.css) via Google Fo
 | Arquivo | Descrição |
 |---------|-----------|
 | `public/assets/logo/femhelp-wordmark.svg` | Wordmark tipográfico discreto |
-| `public/assets/logo/femhelp-icon.svg` | Ícone “F” em fundo lilás (favicon/PWA) |
+| `public/assets/logo/femhelp-icon.svg` | Flor minimalista em fundo rosa (favicon/PWA) |
 | `public/assets/favicon.svg` | Favicon do site |
 
 Wordmark no header via [`public/js/nav.js`](../public/js/nav.js). Favicon injetado por [`public/js/bootstrap.js`](../public/js/bootstrap.js).
@@ -143,6 +189,23 @@ Referência completa em [`public/css/components.css`](../public/css/components.c
 | Botão secundário | `.btn`, `.btn--secondary` | Ações alternativas |
 | Botão SOS | `.btn`, `.btn--sos` | Emergência apenas |
 | Botão ghost | `.btn`, `.btn--ghost` | Sair, cancelar |
+
+#### Botões com acentos florais
+
+Cantos decorados via `background-image` (sem alterar HTML):
+
+| Variante | Assets | Notas |
+|----------|--------|-------|
+| `.btn--primary` | `btn-floral-tr-light.svg`, `btn-floral-bl-light.svg` | Pétalas claras sobre rosa |
+| `.btn--secondary` | `btn-floral-tr-soft.svg`, `btn-floral-bl-soft.svg` | Rosa suave sobre fundo claro |
+| `.btn--ghost` | `*-soft.svg` | Motivos menores (36px) |
+| `.btn--sos` | `*-light.svg` | Pétalas brancas suaves; vermelho continua dominante |
+| `.btn--sm` | herdado da variante | Tamanho reduzido (`--btn-floral-size-sm`) |
+
+Tokens: `--btn-floral-size`, `--btn-floral-size-sm`, `--btn-floral-size-sos`.
+
+Regras: decoração só nos cantos; centro livre para texto/ícones. `btn-quick-exit` do header **não** usa florais (discrição).
+
 | Card | `.card`, `.card__title`, `.card__text` | Blocos de conteúdo |
 | Atalho | `.shortcut-card`, `.shortcut-grid` | Home e grids 2 colunas |
 | Formulário | `.form-group`, `.form-label`, `.form-input` | Login, cadastro, contatos |
@@ -150,6 +213,16 @@ Referência completa em [`public/css/components.css`](../public/css/components.c
 | Modal | `.modal-overlay`, `.modal` | Confirmações (SOS) |
 | Lista contatos | `.contact-list`, `.contact-item` | Tela de contatos |
 | Configurações | `.settings-list`, `.settings-item` | Menu de configurações |
+| Mapa | `.map-container`, `.poi-card`, `#map-status` | Locais de apoio em São Paulo |
+
+#### Mapa de apoio (São Paulo)
+
+- **Stack:** Leaflet 1.9 + tiles [CARTO Voyager](https://carto.com/) (fallback Esri World Street Map)
+- **Dados:** `public/data/content.json` → `pois` (DEAM, hospitais, ONGs, delegacias)
+- **Centro padrão:** São Paulo (`-23.5505`, `-46.6333`); geolocalização opcional se dentro dos limites da cidade
+- **CSS crítico:** `.leaflet-container img { max-width: none !important; }` — neutraliza regra global de `img` em `base.css` que quebra os tiles
+- **Tema rosa:** estilos escopados em `body[data-page="map"]` — filtro `--map-tile-filter` nos tiles OSM, controles Leaflet, filtros, cards `.poi-card` e popups `.map-popup`
+- **Interação:** filtros por categoria; clique no card da lista centraliza o marcador
 
 ### Estrutura de página padrão
 
@@ -163,6 +236,19 @@ Referência completa em [`public/css/components.css`](../public/css/components.c
 
 Bootstrap: `<script src="js/bootstrap.js" data-depth="N"></script>` onde `N` = níveis abaixo de `public/`.
 
+### Conteúdo (vídeos, cursos, empregos)
+
+- Dados em `public/data/content.json` — chaves `videos`, `cursos` e `empregos`.
+- Telas em `public/content/` renderizam cards via `js/content.js` (`FH.initContentPage`).
+- **Cursos gratuitos:** 6 blocos (`.course-block`) alinhados às áreas do plano do TCC. Cada item em `content.json` pode ter `links[]` com `label`, `url` e `type` (`video` ou `course`). O layout exibe botões em bloco: primário **Assistir vídeo** (`.course-link--video`) e secundário **Ver formação completa** (`.course-link--secondary`). Campo `source` exibe a instituição. `FH.renderCourseBlocks` é usado só na página de cursos; vídeos e empregos usam `renderCardGrid`.
+
+### Autenticação
+
+- **Login:** CPF + e-mail + senha (os três obrigatórios). CPF validado localmente em `js/cpf.js` (dígitos verificadores e rejeição de sequências inválidas).
+- **Cadastro:** CPF + declaração explícita de identidade feminina (checkbox obrigatório) + termos LGPD. O CPF brasileiro não codifica gênero; a restrição de acesso é por regra de negócio no app.
+- **Firebase:** credencial continua sendo e-mail/senha; CPF e `isWoman` ficam no perfil (`users/{uid}` no Firestore ou `localStorage` no modo demo).
+- **Perfil:** em Configurações, CPF exibido mascarado (`***.***.***-XX`) via `FH.maskCpfDisplay`.
+
 ---
 
 ## Acessibilidade (WCAG AA)
@@ -171,22 +257,23 @@ Auditoria da paleta FEMHELP (texto normal ≥ 4.5:1, texto grande ≥ 3:1).
 
 | Par de cores | Ratio | Status | Notas |
 |--------------|-------|--------|-------|
-| `#3d3835` sobre `#faf8f6` | ~11.7:1 | Passa AAA | Texto principal |
-| `#3d3835` sobre `#ffffff` | ~12.6:1 | Passa AAA | Cards |
-| `#6b6560` sobre `#faf8f6` | ~4.6:1 | Passa AA | Texto suave |
-| `#6b6560` sobre `#ffffff` | ~5.0:1 | Passa AA | Legendas em cards |
-| `#ffffff` sobre `#c0392b` | ~5.9:1 | Passa AA | Botão SOS |
+| `#3d3838` sobre `#f9f7f8` | ~11.5:1 | Passa AAA | Texto principal |
+| `#3d3838` sobre `#ffffff` | ~12.5:1 | Passa AAA | Cards |
+| `#7a7579` sobre `#f9f7f8` | ~4.5:1 | Passa AA | Texto suave |
+| `#7a7579` sobre `#ffffff` | ~4.9:1 | Passa AA | Legendas em cards |
+| `#ffffff` sobre `#c0392b` | ~5.9:1 | Passa AA | **Botão SOS (único vermelho)** |
 | `#ffffff` sobre `#a93226` | ~6.8:1 | Passa AA | SOS hover |
-| `#3d3835` sobre `#c9b8d9` | ~5.8:1 | Passa AA | Botão primário |
-| `#3d3835` sobre `#f5ebe0` | ~9.5:1 | Passa AAA | Fundo bege |
-| `#9b87b8` sobre `#faf8f6` | ~3.2:1 | Falha AA texto normal | **Não usar como cor de link** |
+| `#3d3838` sobre `#f0b8d0` | ~6.2:1 | Passa AA | Botão primário rosa |
+| `#3d3838` sobre `#fce8f2` | ~10.5:1 | Passa AAA | Fundo rosa claro |
+| `#c97596` sobre `#ffffff` | ~3.8:1 | Passa AA texto grande | Ícones decorativos (com label) |
 
 ### Correções aplicadas
 
-- Links de conteúdo usam `--color-texto` com sublinhado lilás (não lilás escuro como cor de texto).
-- Ícones de atalho usam lilás escuro sobre fundo branco do card (decorativo, com label textual).
+- Vermelho restrito a `.btn--sos`; timer, badge e links 190/180 usam rosa/cinza.
+- Links de conteúdo usam `--color-texto` com sublinhado rosa.
+- Ícones de atalho usam rosa escuro sobre fundo branco (decorativo, com label textual).
 - Touch targets mínimos de 44px em botões e nav.
-- `:focus-visible` com outline lilás de 3px.
+- `:focus-visible` com outline rosa médio de 3px.
 
 ---
 

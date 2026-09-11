@@ -125,34 +125,79 @@ window.FH.savePreferences = async function (prefs) {
   );
 };
 
+const CONTACT_TYPE_LABELS = {
+  familia: "Família",
+  amiga: "Amiga",
+  vizinha: "Vizinha",
+  outro: "Outro",
+};
+
 window.FH.initContactsPage = function () {
   const listEl = document.getElementById("contact-list");
+  const listHeader = document.getElementById("contacts-list-header");
+  const countEl = document.getElementById("contacts-count");
   const form = document.getElementById("contact-form");
   const formTitle = document.getElementById("form-title");
+  const formHint = document.getElementById("form-hint");
+  const submitBtn = document.getElementById("contact-submit-btn");
   const editIdInput = document.getElementById("contact-edit-id");
   const cancelBtn = document.getElementById("contact-cancel");
+  const formCard = document.querySelector(".contacts-form-card");
 
   if (!listEl || !form) return;
 
   window.FH.requireAuth(window.location.pathname);
 
+  function formatType(type) {
+    return CONTACT_TYPE_LABELS[type] || CONTACT_TYPE_LABELS.outro;
+  }
+
+  function renderEmptyState() {
+    if (listHeader) listHeader.classList.add("hidden");
+    listEl.innerHTML = `
+      <div class="contacts-empty-state">
+        <div class="contacts-empty-state__icon" data-icon="contacts" data-icon-class="icon icon--shortcut" aria-hidden="true"></div>
+        <p class="contacts-empty-state__title">Você ainda não cadastrou ninguém</p>
+        <p class="contacts-empty-state__text">
+          Adicione uma pessoa de confiança abaixo. Ela será alertada quando você precisar de ajuda.
+        </p>
+        <a href="#contact-form" class="btn btn--primary btn--block contacts-empty-state__cta">Adicionar primeiro contato</a>
+      </div>`;
+    if (window.FH.icon && listEl.querySelector("[data-icon]")) {
+      listEl.querySelectorAll("[data-icon]").forEach((el) => {
+        const name = el.dataset.icon;
+        const cls = el.dataset.iconClass || "icon";
+        el.innerHTML = window.FH.icon(name, cls);
+      });
+    }
+    if (formCard) formCard.classList.add("contacts-form-card--highlight");
+  }
+
   async function renderList() {
     const contacts = await window.FH.listContacts();
     if (contacts.length === 0) {
-      listEl.innerHTML = '<p class="text-muted">Nenhum contato cadastrado. Adicione alguém de confiança abaixo.</p>';
+      renderEmptyState();
       return;
     }
+
+    if (formCard) formCard.classList.remove("contacts-form-card--highlight");
+    if (listHeader) listHeader.classList.remove("hidden");
+    if (countEl) {
+      const label = contacts.length === 1 ? "1 contato cadastrado" : `${contacts.length} contatos cadastrados`;
+      countEl.textContent = label;
+    }
+
     listEl.innerHTML = `<ul class="contact-list">${contacts
       .map(
         (c) => `
       <li class="contact-item">
         <div class="contact-item__info">
           <strong>${escapeHtml(c.name)}</strong>
-          <span>${escapeHtml(c.phone)} · ${escapeHtml(c.type)}${c.notifyOnSos !== false ? " · 🔔 SOS" : ""}</span>
+          <span>${escapeHtml(c.phone)} · ${escapeHtml(formatType(c.type))}${c.notifyOnSos !== false ? ' · <span class="contact-badge contact-badge--sos">SOS</span>' : ""}</span>
         </div>
         <div class="contact-item__actions">
-          <button type="button" class="btn btn--sm btn--ghost" data-edit="${c.id}">Editar</button>
-          <button type="button" class="btn btn--sm btn--ghost" data-delete="${c.id}">Excluir</button>
+          <button type="button" class="btn btn--sm btn--ghost" data-edit="${c.id}" aria-label="Editar ${escapeHtml(c.name)}">Editar</button>
+          <button type="button" class="btn btn--sm btn--ghost" data-delete="${c.id}" aria-label="Excluir ${escapeHtml(c.name)}">Excluir</button>
         </div>
       </li>`
       )
@@ -169,6 +214,8 @@ window.FH.initContactsPage = function () {
         form.type.value = c.type;
         form.notifyOnSos.checked = c.notifyOnSos !== false;
         if (formTitle) formTitle.textContent = "Editar contato";
+        if (formHint) formHint.textContent = "Atualize os dados do contato selecionado.";
+        if (submitBtn) submitBtn.textContent = "Salvar alterações";
         if (cancelBtn) cancelBtn.classList.remove("hidden");
         form.scrollIntoView({ behavior: "smooth" });
       });
@@ -193,6 +240,8 @@ window.FH.initContactsPage = function () {
     form.reset();
     editIdInput.value = "";
     if (formTitle) formTitle.textContent = "Novo contato";
+    if (formHint) formHint.textContent = "Preencha os dados de alguém de confiança.";
+    if (submitBtn) submitBtn.textContent = "Salvar contato";
     if (cancelBtn) cancelBtn.classList.add("hidden");
   }
 

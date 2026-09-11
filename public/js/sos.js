@@ -76,7 +76,7 @@ window.FH.showSosModal = function (onConfirm) {
   overlay.innerHTML = `
     <div class="modal">
       <h2 class="modal__title" id="sos-modal-title">Confirmar emergência?</h2>
-      <p class="modal__text">Seus contatos de confiança serão alertados e sua localização poderá ser compartilhada.</p>
+      <p class="modal__text">Estamos com você. Seus contatos de confiança serão alertados e sua localização poderá ser compartilhada.</p>
       <div class="modal__actions">
         <button type="button" class="btn btn--sos" id="sos-confirm">Sim, preciso de ajuda</button>
         <button type="button" class="btn btn--ghost btn--block" id="sos-cancel">Cancelar</button>
@@ -99,11 +99,35 @@ window.FH.showSosModal = function (onConfirm) {
   overlay.querySelector("#sos-confirm").focus();
 };
 
+window.FH.setSosButtonLoading = function (btn, loading) {
+  const iconEl = btn.querySelector(".btn-sos__icon");
+  const labelEl = btn.querySelector(".btn-sos__label");
+  if (!labelEl) return;
+
+  btn.disabled = loading;
+  if (loading) {
+    if (iconEl) iconEl.classList.add("hidden");
+    labelEl.textContent = "Acionando...";
+  } else {
+    if (iconEl) iconEl.classList.remove("hidden");
+    labelEl.textContent = "Acionar SOS";
+  }
+};
+
+window.FH.showSosResult = function () {
+  const actionZone = document.getElementById("sos-action-zone");
+  const resultZone = document.getElementById("sos-result-zone");
+  if (actionZone) actionZone.classList.add("hidden");
+  if (resultZone) resultZone.classList.remove("hidden");
+};
+
 window.FH.initSosPage = function () {
   const btn = document.getElementById("btn-sos-trigger");
   const statusEl = document.getElementById("sos-status");
   const locationEl = document.getElementById("sos-location");
   const timerEl = document.getElementById("sos-timer");
+  const timerSection = document.getElementById("sos-timer-section");
+  const timerLabel = document.getElementById("sos-timer-label");
   const notifiedEl = document.getElementById("sos-notified");
 
   if (!btn) return;
@@ -114,6 +138,9 @@ window.FH.initSosPage = function () {
 
   function startTimer(expiresAt) {
     if (timerInterval) clearInterval(timerInterval);
+    if (timerSection) timerSection.classList.remove("hidden");
+    if (timerLabel) timerLabel.textContent = "Compartilhamento de localização expira em:";
+
     const end = new Date(expiresAt).getTime();
 
     function tick() {
@@ -125,7 +152,11 @@ window.FH.initSosPage = function () {
       }
       if (remaining <= 0 && timerInterval) {
         clearInterval(timerInterval);
-        if (statusEl) statusEl.textContent = "Compartilhamento de localização encerrado.";
+        timerInterval = null;
+        if (timerLabel) {
+          timerLabel.textContent = "Compartilhamento de localização encerrado.";
+        }
+        if (timerEl) timerEl.classList.add("hidden");
       }
     }
 
@@ -135,8 +166,7 @@ window.FH.initSosPage = function () {
 
   btn.addEventListener("click", () => {
     window.FH.showSosModal(async () => {
-      btn.disabled = true;
-      btn.textContent = "Acionando...";
+      window.FH.setSosButtonLoading(btn, true);
 
       let coords = {};
       try {
@@ -154,24 +184,23 @@ window.FH.initSosPage = function () {
 
       try {
         const { event, contacts } = await window.FH.triggerSos(coords);
+
+        window.FH.showSosResult();
+
         if (statusEl) {
           statusEl.innerHTML = `<div class="sos-status"><div class="sos-status__icon">${window.FH.icon("check", "icon icon--status")}</div><p><strong>SOS acionado com sucesso.</strong></p><p class="text-muted">Seus contatos foram notificados.</p></div>`;
         }
         if (notifiedEl) {
           notifiedEl.innerHTML =
             contacts.length > 0
-              ? `<p><strong>Contatos notificados:</strong></p><ul>${contacts.map((c) => `<li>${c.name} — ${c.phone}</li>`).join("")}</ul>`
-              : "<p class='alert alert--warning'>Nenhum contato cadastrado para notificação. <a href='" +
-                window.FH.asset("contacts/index.html") +
-                "'>Cadastrar contatos</a></p>";
+              ? `<div class="card"><p class="card__title">Contatos notificados</p><ul class="card__text">${contacts.map((c) => `<li>${c.name} — ${c.phone}</li>`).join("")}</ul></div>`
+              : `<p class="alert alert--warning">Nenhum contato cadastrado para notificação. <a href="${window.FH.asset("contacts/index.html")}">Cadastrar contatos</a></p>`;
           notifiedEl.classList.remove("hidden");
         }
         startTimer(event.expiresAt);
       } catch (err) {
         alert(err.message || "Erro ao acionar SOS.");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Acionar SOS";
+        window.FH.setSosButtonLoading(btn, false);
       }
     });
   });

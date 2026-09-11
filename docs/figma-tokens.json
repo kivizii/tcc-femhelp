@@ -1,56 +1,61 @@
 {
   "rosa-claro": {
-    "value": "#f2c4d6",
+    "value": "#fce8f2",
     "type": "color",
     "description": "--color-rosa-claro"
   },
   "rosa": {
-    "value": "#e8a4bc",
+    "value": "#f0b8d0",
     "type": "color",
     "description": "--color-rosa"
   },
+  "rosa-medio": {
+    "value": "#e891b8",
+    "type": "color",
+    "description": "--color-rosa-medio"
+  },
+  "rosa-escuro": {
+    "value": "#c97596",
+    "type": "color",
+    "description": "--color-rosa-escuro"
+  },
   "nude": {
-    "value": "#e8d5c4",
+    "value": "#f5dfe8",
     "type": "color",
     "description": "--color-nude"
   },
   "bege": {
-    "value": "#f5ebe0",
+    "value": "#fce8f2",
     "type": "color",
-    "description": "--color-bege"
+    "description": "--color-bege (alias rosa-claro)"
   },
   "branco-gelo": {
-    "value": "#faf8f6",
+    "value": "#f9f7f8",
     "type": "color",
     "description": "--color-branco-gelo"
   },
-  "lilas": {
-    "value": "#c9b8d9",
-    "type": "color",
-    "description": "--color-lilas"
-  },
-  "lilas-escuro": {
-    "value": "#9b87b8",
-    "type": "color",
-    "description": "--color-lilas-escuro"
-  },
   "cinza-claro": {
-    "value": "#e8e4e0",
+    "value": "#e8e6e8",
     "type": "color",
     "description": "--color-cinza-claro"
   },
   "cinza": {
-    "value": "#6b6560",
+    "value": "#7a7579",
     "type": "color",
     "description": "--color-cinza"
   },
+  "cinza-escuro": {
+    "value": "#4a4548",
+    "type": "color",
+    "description": "--color-cinza-escuro"
+  },
   "texto": {
-    "value": "#3d3835",
+    "value": "#3d3838",
     "type": "color",
     "description": "--color-texto"
   },
   "texto-suave": {
-    "value": "#6b6560",
+    "value": "#7a7579",
     "type": "color",
     "description": "--color-texto-suave"
   },
@@ -62,7 +67,7 @@
   "sos": {
     "value": "#c0392b",
     "type": "color",
-    "description": "--color-sos"
+    "description": "--color-sos (apenas botao SOS)"
   },
   "sos-hover": {
     "value": "#a93226",
@@ -75,22 +80,22 @@
     "description": "--color-sos-text"
   },
   "sucesso": {
-    "value": "#27ae60",
+    "value": "#5c6b62",
     "type": "color",
     "description": "--color-sucesso"
   },
   "alerta": {
-    "value": "#e67e22",
+    "value": "#4a4548",
     "type": "color",
     "description": "--color-alerta"
   },
   "erro": {
-    "value": "#c0392b",
+    "value": "#b85c7a",
     "type": "color",
     "description": "--color-erro"
   },
   "info": {
-    "value": "#5b7c99",
+    "value": "#6b6568",
     "type": "color",
     "description": "--color-info"
   },

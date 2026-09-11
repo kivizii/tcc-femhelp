@@ -9,42 +9,42 @@
 <body data-page="sos">
   <main class="app-shell">
     <h1 class="page-title">Emergência</h1>
-    <p class="page-subtitle">Acione o SOS para alertar seus contatos de confiança</p>
+    <p class="page-subtitle">Você não está sozinha. Seus contatos de confiança podem ser alertados agora.</p>
 
-    <div class="alert alert--warning">
-      Use apenas em situações de risco real. Em perigo imediato, ligue <strong>190</strong> ou <strong>180</strong>.
+    <div id="sos-action-zone">
+      <div class="alert alert--warning">
+        Use apenas em situações de risco real. Em perigo imediato, ligue
+        <span class="sos-emergency-links">
+          <a href="tel:190" class="sos-emergency-link">190</a>
+          ou
+          <a href="tel:180" class="sos-emergency-link">180</a>
+        </span>.
+      </div>
+
+      <div class="sos-page__action">
+        <button type="button" class="btn btn--sos" id="btn-sos-trigger" aria-label="Acionar SOS de emergência">
+          <span class="btn-sos__icon" data-icon="sos" data-icon-class="icon icon--sos" aria-hidden="true"></span>
+          <span class="btn-sos__label" id="btn-sos-label">Acionar SOS</span>
+        </button>
+      </div>
+
+      <a href="../contacts/index.html" class="btn btn--secondary btn--block mt-lg" id="sos-contacts-link">
+        Gerenciar contatos de confiança
+      </a>
     </div>
 
-    <div id="sos-status">
-      <button type="button" class="btn btn--sos" id="btn-sos-trigger" aria-label="Acionar SOS de emergência">
-        <span data-icon="sos" data-icon-class="icon icon--sos" aria-hidden="true"></span>
-        Acionar SOS
-      </button>
+    <div id="sos-result-zone" class="sos-result-zone hidden" aria-live="polite">
+      <div id="sos-status"></div>
+
+      <div class="location-display hidden" id="sos-location"></div>
+
+      <div class="text-center mt-md hidden" id="sos-timer-section">
+        <p class="text-muted" id="sos-timer-label">Compartilhamento de localização expira em:</p>
+        <p class="timer-display" id="sos-timer">30:00</p>
+      </div>
+
+      <div id="sos-notified" class="hidden"></div>
     </div>
-
-    <div class="location-display hidden" id="sos-location" aria-live="polite"></div>
-
-    <div class="text-center mt-md hidden" id="sos-timer-section">
-      <p class="text-muted">Compartilhamento de localização expira em:</p>
-      <p class="timer-display" id="sos-timer">30:00</p>
-    </div>
-
-    <div id="sos-notified" class="mt-lg hidden" aria-live="polite"></div>
-
-    <a href="../contacts/index.html" class="btn btn--secondary btn--block mt-lg">Gerenciar contatos de confiança</a>
   </main>
-
-  <script>
-    document.addEventListener("femhelp:ready", () => {
-      const timerSection = document.getElementById("sos-timer-section");
-      const observer = new MutationObserver(() => {
-        if (document.getElementById("sos-timer")?.textContent !== "30:00") {
-          timerSection?.classList.remove("hidden");
-        }
-      });
-      const timerEl = document.getElementById("sos-timer");
-      if (timerEl) observer.observe(timerEl, { childList: true, characterData: true, subtree: true });
-    });
-  </script>
 </body>
 </html>

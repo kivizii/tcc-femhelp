@@ -29,6 +29,34 @@ body.has-quick-exit {
   padding-top: var(--header-height);
 }
 
+body:not(.exit-page-body) {
+  background-color: var(--color-branco-gelo);
+  background-image:
+    url("../assets/patterns/floral-tile.svg"),
+    url("../assets/patterns/floral-tile.svg");
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size:
+    var(--floral-tile-size) var(--floral-tile-size),
+    calc(var(--floral-tile-size) * 1.3) calc(var(--floral-tile-size) * 1.3);
+  background-position: 0 0, 80px 120px;
+}
+
+@media (min-width: 481px) {
+  body:not(.exit-page-body) {
+    background-size:
+      var(--floral-tile-size-lg) var(--floral-tile-size-lg),
+      calc(var(--floral-tile-size-lg) * 1.36) calc(var(--floral-tile-size-lg) * 1.36);
+    background-position: 0 0, 110px 150px;
+  }
+}
+
+@media print {
+  body:not(.exit-page-body) {
+    background-image: none;
+  }
+}
+
 img,
 svg {
   display: block;
@@ -38,13 +66,13 @@ svg {
 a {
   color: var(--color-texto);
   text-decoration: underline;
-  text-decoration-color: var(--color-lilas);
+  text-decoration-color: var(--color-rosa);
   text-underline-offset: 2px;
 }
 
 a:hover {
-  color: var(--color-lilas-escuro);
-  text-decoration-color: var(--color-lilas-escuro);
+  color: var(--color-rosa-escuro);
+  text-decoration-color: var(--color-rosa-escuro);
 }
 
 button,
@@ -56,7 +84,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-lilas);
+  outline: 3px solid var(--color-rosa-medio);
   outline-offset: 2px;
 }
 
