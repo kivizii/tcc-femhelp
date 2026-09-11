@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="FEMHELP">
+  <rect width="32" height="32" rx="8" fill="#f0b8d0"/>
+  <g transform="translate(16 16.5)">
+    <g fill="#ffffff">
+      <ellipse cx="0" cy="-5.2" rx="3.1" ry="4.8"/>
+      <ellipse cx="0" cy="-5.2" rx="3.1" ry="4.8" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-5.2" rx="3.1" ry="4.8" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-5.2" rx="3.1" ry="4.8" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-5.2" rx="3.1" ry="4.8" transform="rotate(288)"/>
+    </g>
+    <circle r="2.6" fill="#e891b8"/>
+  </g>
+</svg>

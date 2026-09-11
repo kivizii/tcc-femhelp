@@ -4,61 +4,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Configurações — FEMHELP</title>
-  <script src="js/bootstrap.js" data-depth="0"></script>
+  <script src="js/bootstrap.js" data-depth="0" data-modules="js/cpf.js"></script>
 </head>
-<body>
+<body data-page="settings">
   <main class="app-shell">
     <h1 class="page-title">Configurações</h1>
-    <p class="page-subtitle">Preferências e acesso à conta</p>
+    <p class="page-subtitle">Preferências, conta e acesso a todos os recursos</p>
 
-    <ul class="settings-list">
-      <li class="settings-item">
-        <a href="auth/login.html">Entrar / Cadastrar</a>
-      </li>
-      <li class="settings-item">
-        <a href="info/privacidade.html">Privacidade e LGPD</a>
-      </li>
-      <li class="settings-item">
-        <a href="content/videos.html">Vídeos do dia a dia</a>
-      </li>
-      <li class="settings-item">
-        <a href="content/cursos.html">Cursos gratuitos</a>
-      </li>
-      <li class="settings-item">
-        <a href="content/empregos.html">Oportunidades de emprego</a>
-      </li>
-      <li class="settings-item">
-        <a href="support/maes-solo.html">Apoio mães solo</a>
-      </li>
-      <li class="settings-item">
-        <a href="support/creche.html">Creche parceira</a>
-      </li>
-      <li class="settings-item">
-        <a href="support/psicologico.html">Apoio psicológico</a>
-      </li>
-      <li class="settings-item">
-        <a href="community/chat.html">Chat feminino</a>
-      </li>
-      <li class="settings-item">
-        <a href="community/mural.html">Mural de relatos</a>
-      </li>
-      <li class="settings-item">
-        <a href="info/sede.html">Sede de segurança</a>
-      </li>
-      <li class="settings-item">
-        <a href="info/relato.html">Registrar relato</a>
-      </li>
-    </ul>
+    <section id="settings-profile" class="settings-profile hidden" aria-label="Sua conta">
+      <div class="settings-profile__card card">
+        <p class="settings-profile__greeting">Olá,</p>
+        <p class="settings-profile__name" id="settings-user-name"></p>
+        <p class="settings-profile__email text-muted" id="settings-user-email"></p>
+        <p class="settings-profile__cpf text-muted hidden" id="settings-user-cpf"></p>
+        <button type="button" class="btn btn--ghost btn--block mt-md" id="btn-logout">Sair da conta</button>
+      </div>
+    </section>
 
-    <button type="button" class="btn btn--ghost btn--block mt-lg hidden" id="btn-logout">Sair da conta</button>
+    <section class="settings-group" aria-labelledby="settings-conta-title">
+      <h2 class="section-title" id="settings-conta-title">Conta</h2>
+      <ul class="settings-list">
+        <li class="settings-item" id="settings-login-item">
+          <a href="auth/login.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="contacts" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Entrar / Cadastrar</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="settings-group" aria-labelledby="settings-conteudo-title">
+      <h2 class="section-title" id="settings-conteudo-title">Conteúdo</h2>
+      <ul class="settings-list">
+        <li class="settings-item">
+          <a href="content/videos.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="wrench" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Vídeos do dia a dia</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="content/cursos.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="graduation" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Cursos gratuitos</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="content/empregos.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Oportunidades de emprego</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="settings-group" aria-labelledby="settings-apoio-title">
+      <h2 class="section-title" id="settings-apoio-title">Apoio</h2>
+      <ul class="settings-list">
+        <li class="settings-item">
+          <a href="support/maes-solo.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="heart" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Apoio mães solo</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="support/creche.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="heart" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Creche parceira</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="support/psicologico.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="heart" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Apoio psicológico</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="settings-group" aria-labelledby="settings-comunidade-title">
+      <h2 class="section-title" id="settings-comunidade-title">Comunidade</h2>
+      <ul class="settings-list">
+        <li class="settings-item">
+          <a href="community/chat.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="chat" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Chat feminino</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="community/mural.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="chat" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Mural de relatos</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="settings-group" aria-labelledby="settings-info-title">
+      <h2 class="section-title" id="settings-info-title">Informações</h2>
+      <ul class="settings-list">
+        <li class="settings-item">
+          <a href="info/sobre.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Sobre a FEMHELP</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="info/privacidade.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="settings" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Privacidade e LGPD</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="info/sede.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="map" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Sede de segurança</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="info/relato.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Registrar relato</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="info/educativo.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="graduation" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Direitos e canais</span>
+          </a>
+        </li>
+        <li class="settings-item">
+          <a href="info/fale-conosco.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="chat" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Fale conosco</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
 
   <script>
     document.addEventListener("femhelp:ready", () => {
       const user = window.FH.getCurrentUser();
+      const profileSection = document.getElementById("settings-profile");
+      const loginItem = document.getElementById("settings-login-item");
+      const nameEl = document.getElementById("settings-user-name");
+      const emailEl = document.getElementById("settings-user-email");
+      const cpfEl = document.getElementById("settings-user-cpf");
       const logoutBtn = document.getElementById("btn-logout");
-      if (user && logoutBtn) {
-        logoutBtn.classList.remove("hidden");
+
+      if (user && profileSection) {
+        profileSection.classList.remove("hidden");
+        if (loginItem) loginItem.classList.add("hidden");
+        if (nameEl) nameEl.textContent = user.displayName || "Bem-vinda";
+        if (emailEl) emailEl.textContent = user.email || "";
+        if (cpfEl && user.cpf) {
+          cpfEl.textContent = `CPF: ${window.FH.maskCpfDisplay(user.cpf)}`;
+          cpfEl.classList.remove("hidden");
+        }
+      }
+
+      if (logoutBtn) {
         logoutBtn.addEventListener("click", async () => {
           await window.FH.logout();
           window.location.href = window.FH.asset("index.html");

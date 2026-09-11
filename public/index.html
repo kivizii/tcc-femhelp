@@ -1,77 +1,117 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FEMHELP — plataforma de apoio, acolhimento e segurança feminina">
-  <title>FEMHELP — Início</title>
-  <script src="js/bootstrap.js" data-depth="0"></script>
-</head>
-<body>
-  <main class="app-shell">
-    <section class="home-hero">
-      <p class="home-hero__greeting" id="home-greeting">Bem-vinda</p>
-      <p class="text-muted">Seu espaço seguro de apoio e proteção</p>
-    </section>
-
-    <section class="home-sos-zone" aria-label="Emergência">
-      <a href="emergency/sos.html" class="btn btn--sos" id="home-sos-btn">🆘 SOS — Preciso de ajuda</a>
-      <p class="text-muted text-center mt-md">Toque em caso de emergência</p>
-    </section>
-
-    <section aria-label="Atalhos rápidos">
-      <h2 class="section-title">Acesso rápido</h2>
-      <div class="shortcut-grid">
-        <a href="contacts/index.html" class="shortcut-card">
-          <span class="shortcut-card__icon" aria-hidden="true">👥</span>
-          <span class="shortcut-card__label">Contatos de confiança</span>
-        </a>
-        <a href="map/index.html" class="shortcut-card">
-          <span class="shortcut-card__icon" aria-hidden="true">📍</span>
-          <span class="shortcut-card__label">Mapa de apoio</span>
-        </a>
-        <a href="info/educativo.html" class="shortcut-card">
-          <span class="shortcut-card__icon" aria-hidden="true">📚</span>
-          <span class="shortcut-card__label">Direitos e canais</span>
-        </a>
-        <a href="settings.html" class="shortcut-card">
-          <span class="shortcut-card__icon" aria-hidden="true">⚙️</span>
-          <span class="shortcut-card__label">Configurações</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="mt-lg" aria-label="Serviços">
-      <h2 class="section-title">Serviços</h2>
-      <div class="shortcut-grid">
-        <a href="content/videos.html" class="shortcut-card">
-          <span class="shortcut-card__icon">🔧</span>
-          <span class="shortcut-card__label">Vídeos do dia a dia</span>
-        </a>
-        <a href="content/cursos.html" class="shortcut-card">
-          <span class="shortcut-card__icon">🎓</span>
-          <span class="shortcut-card__label">Cursos gratuitos</span>
-        </a>
-        <a href="support/maes-solo.html" class="shortcut-card">
-          <span class="shortcut-card__icon">💜</span>
-          <span class="shortcut-card__label">Mães solo</span>
-        </a>
-        <a href="community/chat.html" class="shortcut-card">
-          <span class="shortcut-card__icon">💬</span>
-          <span class="shortcut-card__label">Chat feminino</span>
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    document.addEventListener("femhelp:ready", () => {
-      const user = window.FH.getCurrentUser();
-      const greeting = document.getElementById("home-greeting");
-      if (user && greeting) {
-        greeting.textContent = "Olá, " + (user.displayName || "bem-vinda");
-      }
-    });
-  </script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FEMHELP — plataforma de apoio, acolhimento e segurança feminina">
+  <title>FEMHELP — Início</title>
+  <script src="js/bootstrap.js" data-depth="0" data-modules="js/communities.js"></script>
+</head>
+<body data-page="home">
+  <main class="app-shell home-shell">
+    <section class="home-section" aria-labelledby="home-communities-title">
+      <h2 class="home-section__title" id="home-communities-title">Comunidades</h2>
+      <div id="communities-panel"></div>
+    </section>
+
+    <section class="home-welcome card" aria-label="Boas-vindas">
+      <p class="home-welcome__greeting" id="home-greeting">Bem-vinda</p>
+      <p class="home-welcome__text">Seu espaço seguro de apoio, proteção e acolhimento feminino.</p>
+    </section>
+
+    <section class="home-sos-zone" aria-label="Emergência">
+      <a href="emergency/sos.html" class="btn btn--sos" id="home-sos-btn">
+        <span data-icon="sos" data-icon-class="icon icon--sos" aria-hidden="true"></span>
+        SOS — Preciso de ajuda
+      </a>
+      <p class="home-sos-zone__hint">Toque em caso de emergência</p>
+    </section>
+
+    <section class="home-section" aria-labelledby="home-essential-title">
+      <h2 class="home-section__title" id="home-essential-title">Essencial</h2>
+      <div class="home-featured-grid">
+        <a href="contacts/index.html" class="home-featured-card">
+          <span class="home-featured-card__icon" data-icon="contacts" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+          <span class="home-featured-card__label">Contatos de confiança</span>
+          <span class="home-featured-card__hint">Alertas no SOS</span>
+        </a>
+        <a href="map/index.html" class="home-featured-card">
+          <span class="home-featured-card__icon" data-icon="map" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+          <span class="home-featured-card__label">Mapa de apoio</span>
+          <span class="home-featured-card__hint">Locais em SP</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="home-services-title">
+      <h2 class="home-section__title" id="home-services-title">Serviços</h2>
+      <ul class="home-menu">
+        <li class="home-menu__item">
+          <a href="content/videos.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="wrench" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Vídeos do dia a dia</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="content/cursos.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="graduation" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Cursos gratuitos</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="support/maes-solo.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="heart" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Apoio mães solo</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="community/chat.html?room=amizade" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="chat" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Chat feminino</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="info/educativo.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Direitos e canais</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="home-section" aria-labelledby="home-more-title">
+      <h2 class="home-section__title" id="home-more-title">Mais</h2>
+      <ul class="home-menu">
+        <li class="home-menu__item">
+          <a href="info/fale-conosco.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="chat" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Fale conosco</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="settings.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="settings" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Configurações</span>
+          </a>
+        </li>
+        <li class="home-menu__item">
+          <a href="info/sobre.html" class="home-menu__link">
+            <span class="home-menu__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="home-menu__label">Sobre a FEMHELP</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("femhelp:ready", () => {
+      const user = window.FH.getCurrentUser();
+      const greeting = document.getElementById("home-greeting");
+      if (user && greeting) {
+        greeting.textContent = "Olá, " + (user.displayName || "bem-vinda");
+      }
+    });
+  </script>
+</body>
+</html>

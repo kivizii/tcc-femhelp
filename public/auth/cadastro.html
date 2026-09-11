@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro — FEMHELP</title>
-  <script src="../js/bootstrap.js" data-depth="1"></script>
+  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/cpf.js"></script>
 </head>
 <body>
   <main class="app-shell">
     <h1 class="page-title">Criar conta</h1>
-    <p class="page-subtitle">Cadastre-se na rede de apoio FEMHELP</p>
+    <p class="page-subtitle">Espaço de apoio exclusivo para mulheres — cadastre-se com CPF</p>
 
     <form id="register-form" novalidate>
       <div class="form-group">
         <label class="form-label" for="displayName">Nome</label>
         <input class="form-input" type="text" id="displayName" name="displayName" required autocomplete="name" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cpf">CPF</label>
+        <input class="form-input" type="text" id="cpf" name="cpf" required inputmode="numeric" autocomplete="off" placeholder="000.000.000-00">
       </div>
       <div class="form-group">
         <label class="form-label" for="email">E-mail</label>
@@ -23,6 +27,12 @@
       <div class="form-group">
         <label class="form-label" for="password">Senha</label>
         <input class="form-input" type="password" id="password" name="password" required autocomplete="new-password" minlength="6" placeholder="Mínimo 6 caracteres">
+      </div>
+      <div class="form-group">
+        <label class="form-label">
+          <input type="checkbox" name="isWoman" required>
+          Confirmo que sou mulher e que o FEMHELP é um espaço de apoio exclusivo para mulheres.
+        </label>
       </div>
       <div class="form-group">
         <label class="form-label">
@@ -44,16 +54,30 @@
       const form = document.getElementById("register-form");
       const errEl = document.getElementById("register-error");
 
+      window.FH.bindCpfInput(form.cpf);
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         errEl.classList.add("hidden");
 
         const displayName = form.displayName.value.trim();
+        const cpf = form.cpf.value;
         const email = form.email.value.trim();
         const password = form.password.value;
+        const isWoman = form.isWoman.checked;
 
         if (!displayName) {
           errEl.textContent = "Nome é obrigatório.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+        if (!window.FH.validateCpf(cpf)) {
+          errEl.textContent = "CPF inválido.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+        if (!isWoman) {
+          errEl.textContent = "Este espaço é exclusivo para mulheres.";
           errEl.classList.remove("hidden");
           return;
         }
@@ -69,7 +93,7 @@
         }
 
         try {
-          await window.FH.register({ email, password, displayName });
+          await window.FH.register({ cpf, email, password, displayName, isWoman });
           window.location.href = window.FH.asset("index.html");
         } catch (err) {
           errEl.textContent = err.message || "Erro ao cadastrar.";

@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat feminino — FEMHELP</title>
-  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/chat.js"></script>
+  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/communities.js,js/chat.js"></script>
 </head>
 <body data-page="chat">
   <main class="app-shell">
+    <div id="communities-panel" class="chat-communities-picker"></div>
+
     <div class="exclusive-banner">
       🔒 Área exclusiva para mulheres cadastradas. Ambiente moderado para acolhimento e troca de experiências.
     </div>
 
-    <h1 class="page-title">Chat feminino</h1>
-    <p class="page-subtitle">Converse com segurança. Você não está sozinha.</p>
+    <h1 class="page-title" id="chat-room-title">Chat feminino</h1>
+    <p class="page-subtitle" id="chat-room-subtitle">Converse com segurança. Você não está sozinha.</p>
 
     <div class="message-list" id="chat-messages" aria-live="polite"></div>
 
