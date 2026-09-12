@@ -15,19 +15,35 @@ function findDemoUserByCpf(users, cpf) {
   return Object.values(users).find((user) => user.cpf === normalized) || null;
 }
 
+function mergeProfileIntoUser(user, profile = {}) {
+  if (!user) return null;
+  return {
+    ...user,
+    displayName: user.displayName || profile.displayName || "",
+    cpf: user.cpf || profile.cpf || "",
+    avatarDataUrl: profile.avatarDataUrl || user.avatarDataUrl || "",
+  };
+}
+
 window.FH.getCurrentUser = function () {
   if (window.FH.demoMode) {
-    return window.FH.storage.get("currentUser", null);
+    const user = window.FH.storage.get("currentUser", null);
+    if (!user) return null;
+    const profile = window.FH.storage.get(`profile_${user.uid}`, {});
+    return mergeProfileIntoUser(user, profile);
   }
   const user = window.FH.auth?.currentUser;
   if (!user) return null;
   const profile = window.FH.storage.get(`profile_${user.uid}`, {});
-  return {
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName || profile.displayName || "",
-    cpf: profile.cpf || "",
-  };
+  return mergeProfileIntoUser(
+    {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName || profile.displayName || "",
+      cpf: profile.cpf || "",
+    },
+    profile
+  );
 };
 
 async function hydrateFirebaseProfile(user) {
@@ -42,7 +58,9 @@ async function hydrateFirebaseProfile(user) {
   if (!snap.exists()) return;
 
   const data = snap.data();
+  const existing = window.FH.storage.get(`profile_${user.uid}`, {});
   window.FH.storage.set(`profile_${user.uid}`, {
+    ...existing,
     displayName: data.displayName || user.displayName || "",
     cpf: data.cpf || "",
     isWoman: data.isWoman,
@@ -176,19 +194,24 @@ window.FH.login = async function ({ cpf, email, password }) {
     throw new Error("Este espaço é exclusivo para mulheres.");
   }
 
+  const existing = window.FH.storage.get(`profile_${cred.user.uid}`, {});
   window.FH.storage.set(`profile_${cred.user.uid}`, {
+    ...existing,
     displayName: profile.displayName || cred.user.displayName || "",
     cpf: profile.cpf,
     isWoman: true,
   });
 
-  return {
-    uid: cred.user.uid,
-    email: cred.user.email,
-    displayName: profile.displayName || cred.user.displayName || "",
-    cpf: profile.cpf,
-    isWoman: true,
-  };
+  return mergeProfileIntoUser(
+    {
+      uid: cred.user.uid,
+      email: cred.user.email,
+      displayName: profile.displayName || cred.user.displayName || "",
+      cpf: profile.cpf,
+      isWoman: true,
+    },
+    window.FH.storage.get(`profile_${cred.user.uid}`, {})
+  );
 };
 
 window.FH.logout = async function () {
@@ -219,7 +242,7 @@ window.FH.updateHeaderAuth = function () {
 
   const user = window.FH.getCurrentUser();
   if (user) {
-    slot.innerHTML = `<a href="${window.FH.asset("settings.html")}" class="btn btn--sm btn--ghost">${user.displayName || "Conta"}</a>`;
+    slot.innerHTML = "";
   } else {
     slot.innerHTML = `<a href="${window.FH.asset("auth/login.html")}" class="btn btn--sm btn--primary">Entrar</a>`;
   }

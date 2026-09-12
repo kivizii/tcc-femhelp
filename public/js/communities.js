@@ -3,11 +3,16 @@
  */
 window.FH = window.FH || {};
 
-const COMMUNITIES_JSON_VERSION = 1;
+const COMMUNITIES_JSON_VERSION = 9;
 const USER_COMMUNITIES_KEY = "user_communities";
+const COMMUNITIES_VERSION_KEY = "communities_json_version";
 const DEFAULT_ROOM_ID = "amizade";
 
 let communitiesCache = null;
+
+window.FH.clearCommunitiesCache = function () {
+  communitiesCache = null;
+};
 
 function escapeHtml(str) {
   const div = document.createElement("div");
@@ -35,17 +40,34 @@ window.FH.getChatUrl = function (roomId) {
   return `${window.FH.asset("community/chat.html")}?room=${encodeURIComponent(roomId)}`;
 };
 
-window.FH.loadCommunities = async function () {
-  if (communitiesCache) return communitiesCache;
+window.FH.getChatRoomQueryUrl = function (roomId) {
+  return `?room=${encodeURIComponent(roomId)}`;
+};
 
-  const url = `${window.FH.asset("data/communities.json")}?v=${COMMUNITIES_JSON_VERSION}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error("Não foi possível carregar as comunidades.");
+function joinedStorageKey(roomId) {
+  return `chat_joined_${roomId}`;
+}
 
-  const data = await res.json();
-  const curated = data.communities || [];
+window.FH.isCommunityJoined = function (roomId) {
+  return window.FH.storage.get(joinedStorageKey(roomId), false) === true;
+};
+
+window.FH.joinCommunity = function (roomId, options = {}) {
+  if (!window.FH.storage.set(joinedStorageKey(roomId), true)) {
+    return false;
+  }
+  if (!options.silent) {
+    document.dispatchEvent(new CustomEvent("femhelp:chat-join-changed", { detail: { roomId, joined: true } }));
+  }
+  return true;
+};
+
+function getCuratedFallback() {
+  return window.FH.CURATED_COMMUNITIES_FALLBACK || [];
+}
+
+function mergeCommunities(curated) {
   const userCreated = window.FH.storage.get(USER_COMMUNITIES_KEY, []);
-
   const seen = new Set(curated.map((c) => c.id));
   const merged = [...curated];
   userCreated.forEach((c) => {
@@ -54,9 +76,35 @@ window.FH.loadCommunities = async function () {
       seen.add(c.id);
     }
   });
-
-  communitiesCache = merged;
   return merged;
+}
+
+window.FH.loadCommunities = async function () {
+  const storedVersion = window.FH.storage.get(COMMUNITIES_VERSION_KEY, null);
+  if (storedVersion !== COMMUNITIES_JSON_VERSION) {
+    communitiesCache = null;
+  }
+
+  if (communitiesCache) return communitiesCache;
+
+  let curated = [];
+  try {
+    const url = `${window.FH.asset("data/communities.json")}?v=${COMMUNITIES_JSON_VERSION}`;
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    curated = data.communities || [];
+  } catch (err) {
+    console.warn("FEMHELP: fetch de communities.json falhou; usando fallback embutido.", err);
+    curated = getCuratedFallback();
+    if (!curated.length) {
+      throw new Error("Não foi possível carregar as comunidades.");
+    }
+  }
+
+  communitiesCache = mergeCommunities(curated);
+  window.FH.storage.set(COMMUNITIES_VERSION_KEY, COMMUNITIES_JSON_VERSION);
+  return communitiesCache;
 };
 
 window.FH.getCommunityById = async function (roomId) {
@@ -88,6 +136,63 @@ window.FH.createCommunity = function ({ name, description, type }) {
   return community;
 };
 
+function formatMemberCountLabel(count) {
+  if (!count || count < 1) return "";
+  return count === 1 ? "1 mulher online" : `${count} mulheres online`;
+}
+
+function getLastSeedPreview(community) {
+  const seeds = community.seedMessages || [];
+  if (seeds.length === 0) return "";
+  const last = seeds[seeds.length - 1];
+  const author = last.author ? `${last.author}: ` : "";
+  return `${author}${last.text || ""}`;
+}
+
+function renderCommunityBrowseCard(community, activeRoomId, options = {}) {
+  const isActive = activeRoomId === community.id;
+  const isAlert = community.type === "alert";
+  const isJoined = window.FH.isCommunityJoined?.(community.id) ?? false;
+  const iconName = community.icon || (isAlert ? "alert" : "chat");
+  const memberLabel = formatMemberCountLabel(community.memberCount);
+  const preview = getLastSeedPreview(community);
+  const cardClass = `community-card${isActive ? " community-card--active" : ""}${isJoined ? " community-card--joined" : ""}${isAlert ? " community-card--alert" : ""}`;
+  const cardBody = `
+      <span class="community-card__icon">${window.FH.icon(iconName, "icon icon--shortcut", 20)}</span>
+      <span class="community-card__body">
+        <span class="community-card__header">
+          <span class="community-card__name">${escapeHtml(community.name)}</span>
+          ${isJoined ? '<span class="community-card__joined" aria-label="Participando">✓</span>' : ""}
+          ${isAlert ? '<span class="community-card__badge">Alerta</span>' : ""}
+        </span>
+        <span class="community-card__desc">${escapeHtml(community.description)}</span>
+        ${memberLabel ? `<span class="community-card__members">${escapeHtml(memberLabel)}</span>` : ""}
+        ${preview ? `<span class="community-card__preview">${escapeHtml(preview)}</span>` : ""}
+      </span>`;
+
+  if (options.chatPage) {
+    return `
+    <a
+      href="${window.FH.getChatRoomQueryUrl(community.id)}"
+      class="${cardClass}"
+      data-room-id="${escapeHtml(community.id)}"
+      ${isActive ? 'aria-current="page"' : ""}
+    >
+      ${cardBody}
+    </a>`;
+  }
+
+  return `
+    <a
+      href="${window.FH.getChatUrl(community.id)}"
+      class="${cardClass}"
+      data-room-id="${escapeHtml(community.id)}"
+      ${isActive ? 'aria-current="page"' : ""}
+    >
+      ${cardBody}
+    </a>`;
+}
+
 function renderCommunityItem(community, activeRoomId, variant) {
   const isActive = activeRoomId === community.id;
   const isAlert = community.type === "alert";
@@ -95,12 +200,14 @@ function renderCommunityItem(community, activeRoomId, variant) {
   const isCompact = variant === "compact";
 
   if (isCompact) {
+    const isJoined = window.FH.isCommunityJoined?.(community.id) ?? false;
     return `
       <a
         href="${window.FH.getChatUrl(community.id)}"
-        class="community-pill${isActive ? " community-pill--active" : ""}${isAlert ? " community-pill--alert" : ""}"
+        class="community-pill${isActive ? " community-pill--active" : ""}${isAlert ? " community-pill--alert" : ""}${isJoined ? " community-pill--joined" : ""}"
         ${isActive ? 'aria-current="page"' : ""}
       >
+        ${isJoined ? '<span class="community-pill__check" aria-hidden="true">✓</span>' : ""}
         ${escapeHtml(community.name)}
       </a>`;
   }
@@ -188,6 +295,11 @@ function bindCreateForm(container) {
 
     try {
       const community = window.FH.createCommunity({ name, description, type });
+      window.FH.joinCommunity(community.id, { silent: true });
+      if (document.body.dataset.page === "chat" && typeof window.FH.openChatRoom === "function") {
+        window.FH.openChatRoom(community.id);
+        return;
+      }
       window.location.href = window.FH.getChatUrl(community.id);
     } catch (err) {
       if (errorEl) errorEl.textContent = err.message || "Não foi possível criar a comunidade.";
@@ -208,6 +320,29 @@ window.FH.renderCommunitiesPanel = async function (container, options = {}) {
 
   try {
     const communities = await window.FH.loadCommunities();
+
+    if (variant === "browse") {
+      const isChatPage = document.body.dataset.page === "chat";
+      const cardsHtml = communities
+        .map((c) => renderCommunityBrowseCard(c, activeRoomId, { chatPage: isChatPage }))
+        .join("");
+      const createSection = showCreateForm
+        ? renderCreateSection("+ Nova comunidade", "btn btn--sm btn--ghost btn--block community-create__toggle")
+        : "";
+
+      container.innerHTML = `
+        <div class="communities-panel communities-panel--browse">
+          <h2 class="communities-panel__browse-title">Comunidades femininas</h2>
+          <nav class="communities-panel__list communities-panel__list--browse" aria-label="Comunidades femininas">
+            ${cardsHtml}
+          </nav>
+          ${createSection}
+        </div>`;
+
+      bindCreateForm(container);
+      return;
+    }
+
     const itemsHtml = communities
       .map((c) => renderCommunityItem(c, activeRoomId, variant))
       .join("");
@@ -255,8 +390,20 @@ document.addEventListener("femhelp:ready", async () => {
 
   const isChatPage = document.body.dataset.page === "chat";
   await window.FH.renderCommunitiesPanel(panel, {
-    activeRoomId: isChatPage ? window.FH.getRoomFromUrl() : null,
+    activeRoomId: isChatPage ? null : window.FH.getRoomFromUrl?.(),
     showCreateForm: true,
-    variant: isChatPage ? "compact" : "full",
+    variant: "browse",
+  });
+});
+
+document.addEventListener("femhelp:chat-join-changed", async () => {
+  const panel = document.getElementById("communities-panel");
+  const browseEl = document.getElementById("chat-browse-view");
+  if (!panel || document.body.dataset.page !== "chat" || !browseEl?.classList.contains("chat-view--active")) return;
+
+  await window.FH.renderCommunitiesPanel(panel, {
+    activeRoomId: null,
+    showCreateForm: true,
+    variant: "browse",
   });
 });

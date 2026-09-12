@@ -1,31 +1,414 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Chat feminino — FEMHELP</title>
+
   <script src="../js/bootstrap.js" data-depth="1" data-modules="js/communities.js,js/chat.js"></script>
+
+  <script>
+    (function () {
+      function showRoomShellFromUrl() {
+        var room = new URLSearchParams(window.location.search).get("room");
+        if (!room) return;
+        var browse = document.getElementById("chat-browse-view");
+        var roomView = document.getElementById("chat-room-view");
+        if (!browse || !roomView) return;
+        browse.classList.remove("chat-view--active");
+        browse.setAttribute("hidden", "");
+        browse.setAttribute("aria-hidden", "true");
+        roomView.classList.add("chat-view--active");
+        roomView.removeAttribute("hidden");
+        roomView.setAttribute("aria-hidden", "false");
+        document.body.dataset.chatView = "room";
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", showRoomShellFromUrl, { once: true });
+      } else {
+        showRoomShellFromUrl();
+      }
+    })();
+  </script>
+
 </head>
+
 <body data-page="chat">
-  <main class="app-shell">
-    <div id="communities-panel" class="chat-communities-picker"></div>
 
-    <div class="exclusive-banner">
-      🔒 Área exclusiva para mulheres cadastradas. Ambiente moderado para acolhimento e troca de experiências.
-    </div>
+  <main class="app-shell chat-page">
 
-    <h1 class="page-title" id="chat-room-title">Chat feminino</h1>
-    <p class="page-subtitle" id="chat-room-subtitle">Converse com segurança. Você não está sozinha.</p>
+    <section id="chat-browse-view" class="chat-view chat-browse-view chat-view--active" aria-label="Comunidades femininas">
 
-    <div class="message-list" id="chat-messages" aria-live="polite"></div>
+      <h1 class="page-title">Comunidades femininas</h1>
 
-    <form class="chat-input-row" id="chat-form">
-      <label class="sr-only" for="chat-input">Sua mensagem</label>
-      <input class="form-input" type="text" id="chat-input" placeholder="Escreva sua mensagem..." required>
-      <button type="submit" class="btn btn--primary">Enviar</button>
-    </form>
+      <p class="page-subtitle">Escolha uma comunidade para conversar com segurança.</p>
 
-    <p class="text-muted mt-md">Apoiadores podem deixar mensagens de conscientização mediante moderação.</p>
+
+
+      <div class="exclusive-banner">
+
+        🔒 Área exclusiva para mulheres cadastradas. Ambiente moderado para acolhimento e troca de experiências.
+
+      </div>
+
+
+
+      <div id="communities-panel" class="chat-communities-picker"></div>
+
+    </section>
+
+
+
+    <section id="chat-room-view" class="chat-view chat-room-view" aria-hidden="true" aria-label="Conversa da comunidade">
+
+      <button type="button" class="chat-back-btn" id="chat-back-btn">
+
+        ← Voltar às comunidades
+
+      </button>
+
+
+
+      <header class="chat-room-header" id="chat-room-header">
+
+        <div class="chat-room-header__main">
+
+          <span class="chat-room-header__icon" id="chat-room-icon" aria-hidden="true"></span>
+
+          <div class="chat-room-header__body">
+
+            <h2 class="chat-room-header__title" id="chat-room-title">Chat feminino</h2>
+
+            <p class="chat-room-header__desc" id="chat-room-subtitle">Converse com segurança. Você não está sozinha.</p>
+
+            <p class="chat-room-header__members" id="chat-room-members" hidden></p>
+
+          </div>
+
+        </div>
+
+        <div class="chat-room-header__actions">
+
+          <span class="chat-joined-badge" id="chat-joined-badge">
+
+            <span class="chat-joined-badge__icon" aria-hidden="true">✓</span>
+
+            Você está participando
+
+          </span>
+
+        </div>
+
+      </header>
+
+
+
+      <p class="chat-demo-notice" id="chat-demo-notice">
+
+        Conversas demonstrativas entre participantes fictícias. Suas mensagens aparecem em lilás e podem receber respostas simuladas de acolhimento.
+
+      </p>
+
+      <p class="chat-auth-notice" id="chat-auth-notice" hidden role="status">
+
+        <a href="#" id="chat-auth-login-link" class="chat-auth-notice__link">Entrar para participar</a> e enviar mensagens nesta comunidade.
+
+      </p>
+
+
+
+      <div class="chat-room-view__body">
+
+        <div class="message-list chat-room-view__messages" id="chat-messages" aria-live="polite"></div>
+
+
+
+        <div class="chat-room-view__composer">
+
+          <div class="chat-suggestions" id="chat-suggestions" hidden aria-label="Sugestões de mensagem"></div>
+
+
+
+          <form class="chat-input-row" id="chat-form" method="post" action="#" novalidate>
+
+            <label class="sr-only" for="chat-input">Sua mensagem</label>
+
+            <input class="form-input" type="text" id="chat-input" placeholder="Escreva sua mensagem..." autocomplete="off">
+
+            <button type="button" class="btn btn--primary" id="chat-send-btn">Enviar</button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
   </main>
+
+  <script>
+    (function () {
+      var AMIZADE_SEEDS = [
+        { author: "Ana", text: "Bom dia, meninas. Vocês não estão sozinhas. Estamos aqui para ouvir.", time: "08:42", own: false },
+        { author: "Marina", text: "Oi, Ana! Obrigada por abrir o dia assim. Alguém quer conversar hoje?", time: "08:45", own: false },
+        { author: "Patrícia", text: "Eu queria. Passei a noite ansiosa e não sei com quem desabafar fora daqui.", time: "08:51", own: false },
+        { author: "Sofia", text: "Patrícia, pode falar no seu tempo. Ninguém vai te julgar.", time: "08:54", own: false },
+        { author: "Ana", text: "Exato. Às vezes só escrever já alivia um pouco.", time: "08:56", own: false },
+        { author: "Marina", text: "Quando me sinto sozinha, lembro que este espaço existe. Me ajuda muito.", time: "09:02", own: false },
+        { author: "Patrícia", text: "Isso me conforta. Acho que vou contar o que aconteceu ontem.", time: "09:08", own: false },
+        { author: "Sofia", text: "Estamos aqui. Respira fundo e vai com calma.", time: "09:10", own: false },
+        { author: "Ana", text: "Se preferir, pode mandar só um pedacinho. Você decide o ritmo.", time: "09:12", own: false },
+        { author: "Marina", text: "E se alguém nova chegar hoje: seja bem-vinda. Este é um lugar seguro.", time: "09:18", own: false }
+      ];
+
+      function esc(str) {
+        var div = document.createElement("div");
+        div.textContent = str || "";
+        return div.innerHTML;
+      }
+
+      function initials(name) {
+        if (!name) return "?";
+        var parts = String(name).trim().split(/\s+/).filter(Boolean);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return parts[0].slice(0, 2).toUpperCase();
+      }
+
+      function renderSeeds(listEl, seeds) {
+        if (!listEl || !seeds || !seeds.length) return;
+        if (listEl.getAttribute("data-fh-has-messages") === "1") return;
+
+        listEl.innerHTML = seeds.map(function (m) {
+          var timeHtml = m.time ? '<span class="message-bubble__time">' + esc(m.time) + "</span>" : "";
+          return (
+            '<div class="message-row message-row--other">' +
+            '<span class="message-bubble__avatar" aria-hidden="true">' + esc(initials(m.author)) + "</span>" +
+            '<div class="message-bubble message-bubble--other">' +
+            '<div class="message-bubble__meta"><span class="message-bubble__author">' + esc(m.author) + "</span>" + timeHtml + "</div>" +
+            esc(m.text) +
+            "</div></div>"
+          );
+        }).join("");
+
+        listEl.setAttribute("data-fh-has-messages", "1");
+        listEl.scrollTop = listEl.scrollHeight;
+      }
+
+      function paintFromFallback(roomId) {
+        if (window.FH && typeof window.FH.paintChatSeedsFallback === "function") {
+          return window.FH.paintChatSeedsFallback(roomId);
+        }
+
+        var listEl = document.getElementById("chat-messages");
+        if (!listEl) return;
+
+        var curated = window.FH && window.FH.CURATED_COMMUNITIES_FALLBACK;
+        if (Array.isArray(curated)) {
+          var found = curated.find(function (c) { return c.id === roomId; });
+          if (found && found.seedMessages && found.seedMessages.length) {
+            renderSeeds(listEl, found.seedMessages);
+            return;
+          }
+        }
+
+        if (roomId === "amizade") {
+          renderSeeds(listEl, AMIZADE_SEEDS);
+        }
+      }
+
+      async function paintFromJson(roomId) {
+        var listEl = document.getElementById("chat-messages");
+        if (!listEl || listEl.getAttribute("data-fh-has-messages") === "1") return;
+
+        try {
+          var res = await fetch("../data/communities.json", { cache: "no-store" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          var data = await res.json();
+          var community = (data.communities || []).find(function (c) { return c.id === roomId; });
+          if (community && community.seedMessages && community.seedMessages.length) {
+            renderSeeds(listEl, community.seedMessages);
+          }
+        } catch (err) {
+          paintFromFallback(roomId);
+        }
+      }
+
+      function getRoomId() {
+        return new URLSearchParams(window.location.search).get("room") || "amizade";
+      }
+
+      function getInlineUserMessages(roomId) {
+        try {
+          return JSON.parse(sessionStorage.getItem("fh_inline_chat_" + roomId) || "[]");
+        } catch (err) {
+          return [];
+        }
+      }
+
+      function saveInlineUserMessages(roomId, msgs) {
+        try {
+          sessionStorage.setItem("fh_inline_chat_" + roomId, JSON.stringify(msgs));
+        } catch (err) {
+          /* ignore */
+        }
+      }
+
+      function appendOwnMessageBubble(text) {
+        var listEl = document.getElementById("chat-messages");
+        if (!listEl || !text) return false;
+        var now = new Date();
+        var time = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+        listEl.insertAdjacentHTML(
+          "beforeend",
+          '<div class="message-row message-row--own">' +
+            '<span class="message-bubble__avatar" aria-hidden="true">V</span>' +
+            '<div class="message-bubble message-bubble--own">' +
+            '<div class="message-bubble__meta"><span class="message-bubble__author">Você</span>' +
+            '<span class="message-bubble__time">' + esc(time) + "</span></div>" +
+            esc(text) +
+            "</div></div>"
+        );
+        listEl.setAttribute("data-fh-has-messages", "1");
+        listEl.scrollTop = listEl.scrollHeight;
+        return true;
+      }
+
+      function scheduleInlineReply() {
+        var replies = [
+          "Obrigada por compartilhar. Você não está sozinha.",
+          "Te entendo. Estamos aqui com você.",
+          "Pode falar no seu tempo. Ninguém vai te julgar."
+        ];
+        var authors = ["Marina", "Ana", "Sofia"];
+        setTimeout(function () {
+          var listEl = document.getElementById("chat-messages");
+          if (!listEl) return;
+          var author = authors[Math.floor(Math.random() * authors.length)];
+          var text = replies[Math.floor(Math.random() * replies.length)];
+          var now = new Date();
+          var time = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+          listEl.insertAdjacentHTML(
+            "beforeend",
+            '<div class="message-row message-row--other">' +
+              '<span class="message-bubble__avatar" aria-hidden="true">' + esc(initials(author)) + "</span>" +
+              '<div class="message-bubble message-bubble--other message-bubble--simulated">' +
+              '<div class="message-bubble__meta"><span class="message-bubble__author">' + esc(author) + "</span>" +
+              '<span class="message-bubble__time">' + esc(time) + "</span></div>" +
+              esc(text) +
+              "</div></div>"
+          );
+          listEl.scrollTop = listEl.scrollHeight;
+        }, 1500 + Math.random() * 1500);
+      }
+
+      function paintInlineUserMessages(roomId) {
+        var listEl = document.getElementById("chat-messages");
+        if (!listEl) return;
+        getInlineUserMessages(roomId).forEach(function (msg) {
+          if (msg && msg.text) appendOwnMessageBubble(msg.text);
+        });
+      }
+
+      var inlineSendBusy = false;
+
+      function sendChatMessageInline(event) {
+        if (event && event.preventDefault) event.preventDefault();
+        if (inlineSendBusy) return;
+
+        var input = document.getElementById("chat-input");
+        if (!input) return;
+        var text = input.value.trim();
+        if (!text) return;
+
+        var roomId = getRoomId();
+
+        function inlineFallback() {
+          appendOwnMessageBubble(text);
+          input.value = "";
+          var msgs = getInlineUserMessages(roomId);
+          msgs.push({ text: text, own: true, createdAt: new Date().toISOString() });
+          saveInlineUserMessages(roomId, msgs);
+          scheduleInlineReply();
+        }
+
+        inlineSendBusy = true;
+
+        if (window.FH && typeof window.FH.sendChatMessage === "function" && window.FH.initChatPage) {
+          window.FH.initChatPage()
+            .then(function () {
+              if (window.FH.sendChatMessage(text)) {
+                input.value = "";
+              } else {
+                inlineFallback();
+              }
+            })
+            .catch(function () {
+              inlineFallback();
+            })
+            .finally(function () {
+              inlineSendBusy = false;
+            });
+          return;
+        }
+
+        inlineFallback();
+        inlineSendBusy = false;
+      }
+
+      window.fhSendChatMessage = sendChatMessageInline;
+
+      document.addEventListener("click", function (e) {
+        if (!e.target || !e.target.closest("#chat-send-btn")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        sendChatMessageInline(e);
+      }, true);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.target && e.target.id === "chat-input" && e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendChatMessageInline(e);
+        }
+      }, true);
+
+      document.addEventListener("submit", function (e) {
+        if (e.target && e.target.id === "chat-form") {
+          e.preventDefault();
+          sendChatMessageInline(e);
+        }
+      }, true);
+
+      function bootInlineChat() {
+        var room = new URLSearchParams(window.location.search).get("room");
+        if (!room) return;
+        paintFromFallback(room);
+        paintFromJson(room).then(function () {
+          paintInlineUserMessages(room);
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", bootInlineChat, { once: true });
+      } else {
+        bootInlineChat();
+      }
+
+      document.addEventListener("femhelp:ready", function () {
+        var room = new URLSearchParams(window.location.search).get("room");
+        if (room) paintFromFallback(room);
+      }, { once: true });
+    })();
+  </script>
+
 </body>
+
 </html>
+
+

@@ -13,11 +13,18 @@
 
     <section id="settings-profile" class="settings-profile hidden" aria-label="Sua conta">
       <div class="settings-profile__card card">
+        <div class="settings-profile__avatar-wrap" id="settings-avatar-wrap"></div>
         <p class="settings-profile__greeting">Olá,</p>
         <p class="settings-profile__name" id="settings-user-name"></p>
         <p class="settings-profile__email text-muted" id="settings-user-email"></p>
         <p class="settings-profile__cpf text-muted hidden" id="settings-user-cpf"></p>
-        <button type="button" class="btn btn--ghost btn--block mt-md" id="btn-logout">Sair da conta</button>
+        <input type="file" id="settings-avatar-input" accept="image/*" hidden>
+        <div class="settings-profile__actions">
+          <button type="button" class="btn btn--primary btn--block" id="settings-change-photo">Alterar foto</button>
+          <a href="community/notas.html" class="btn btn--ghost btn--block">Notas da comunidade</a>
+          <button type="button" class="btn btn--ghost btn--block" id="btn-logout">Sair da conta</button>
+          <button type="button" class="btn btn--ghost btn--block mt-sm hidden" id="btn-reset-demo">Apagar dados de teste</button>
+        </div>
       </div>
     </section>
 
@@ -96,6 +103,12 @@
             <span class="settings-item__label">Mural de relatos</span>
           </a>
         </li>
+        <li class="settings-item">
+          <a href="community/notas.html" class="settings-item__link">
+            <span class="settings-item__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
+            <span class="settings-item__label">Notas da comunidade</span>
+          </a>
+        </li>
       </ul>
     </section>
 
@@ -151,6 +164,20 @@
       const emailEl = document.getElementById("settings-user-email");
       const cpfEl = document.getElementById("settings-user-cpf");
       const logoutBtn = document.getElementById("btn-logout");
+      const resetDemoBtn = document.getElementById("btn-reset-demo");
+      const avatarWrap = document.getElementById("settings-avatar-wrap");
+      const avatarInput = document.getElementById("settings-avatar-input");
+      const changePhotoBtn = document.getElementById("settings-change-photo");
+
+      function renderSettingsAvatar() {
+        const currentUser = window.FH.getCurrentUser();
+        if (!avatarWrap || !currentUser) return;
+        avatarWrap.innerHTML = window.FH.getAvatarMarkup(currentUser, "lg");
+      }
+
+      if (window.FH.demoMode && resetDemoBtn) {
+        resetDemoBtn.classList.remove("hidden");
+      }
 
       if (user && profileSection) {
         profileSection.classList.remove("hidden");
@@ -161,12 +188,41 @@
           cpfEl.textContent = `CPF: ${window.FH.maskCpfDisplay(user.cpf)}`;
           cpfEl.classList.remove("hidden");
         }
+        renderSettingsAvatar();
       }
+
+      if (changePhotoBtn && avatarInput) {
+        changePhotoBtn.addEventListener("click", () => avatarInput.click());
+        avatarInput.addEventListener("change", async () => {
+          const file = avatarInput.files?.[0];
+          avatarInput.value = "";
+          if (!file) return;
+          try {
+            await window.FH.setUserAvatar(file);
+            renderSettingsAvatar();
+          } catch (err) {
+            alert(err.message || "Não foi possível atualizar a foto.");
+          }
+        });
+      }
+
+      document.addEventListener("femhelp:profile-updated", renderSettingsAvatar);
 
       if (logoutBtn) {
         logoutBtn.addEventListener("click", async () => {
           await window.FH.logout();
           window.location.href = window.FH.asset("index.html");
+        });
+      }
+
+      if (resetDemoBtn) {
+        resetDemoBtn.addEventListener("click", () => {
+          const confirmed = confirm(
+            "Isso apaga todas as contas, mensagens e dados salvos neste navegador. Continuar?"
+          );
+          if (!confirmed) return;
+          window.FH.resetDemoData();
+          window.location.href = window.FH.asset("auth/login.html");
         });
       }
     });

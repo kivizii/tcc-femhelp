@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notas da comunidade — FEMHELP</title>
+  <script src="../js/bootstrap.js" data-depth="1" data-modules="js/notas.js"></script>
+</head>
+<body data-page="notas">
+  <main class="app-shell">
+    <h1 class="page-title">Notas da comunidade</h1>
+    <p class="page-subtitle">Compartilhe e comente com outras mulheres em um espaço acolhedor.</p>
+
+    <p class="daily-notes-privacy text-muted">
+      As notas de demonstração são fictícias. Seus comentários e publicações aparecem com seu nome.
+    </p>
+
+    <section class="daily-notes-composer card" aria-label="Nova anotação">
+      <p class="daily-notes-composer__login-hint text-muted" id="composer-login-hint" hidden>
+        <a href="../auth/login.html">Entre</a> para publicar uma nota.
+      </p>
+      <form id="daily-notes-form">
+        <div class="form-group">
+          <label class="form-label" for="daily-note-input">O que você quer compartilhar hoje?</label>
+          <textarea
+            class="form-textarea daily-notes-composer__input"
+            id="daily-note-input"
+            name="text"
+            maxlength="280"
+            rows="4"
+            placeholder="Escreva como faria no X — sua voz importa aqui..."
+            required
+          ></textarea>
+        </div>
+        <label class="daily-notes-composer__visibility">
+          <input type="checkbox" id="daily-note-private" name="private">
+          Manter privada
+        </label>
+        <div class="daily-notes-composer__footer">
+          <span class="daily-notes-composer__counter" id="daily-note-counter" aria-live="polite">0 / 280</span>
+          <button type="submit" class="btn btn--primary">Publicar nota</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="daily-notes-feed" aria-label="Notas da comunidade">
+      <h2 class="section-title">Comunidade</h2>
+      <div id="community-notes-list" aria-live="polite"></div>
+    </section>
+
+    <section class="daily-notes-feed" id="private-notes-section" aria-label="Suas notas privadas" hidden>
+      <h2 class="section-title">Suas notas privadas</h2>
+      <p class="text-muted daily-notes-privacy">Só você vê estas notas neste dispositivo.</p>
+      <div id="private-notes-list" aria-live="polite"></div>
+    </section>
+  </main>
+</body>
+</html>
