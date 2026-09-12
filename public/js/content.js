@@ -3,7 +3,7 @@
  */
 window.FH = window.FH || {};
 
-const CONTENT_JSON_VERSION = 3;
+const CONTENT_JSON_VERSION = 4;
 
 window.FH.loadContent = async function () {
   const url = `${window.FH.asset("data/content.json")}?v=${CONTENT_JSON_VERSION}`;
@@ -16,6 +16,37 @@ function filterItems(items, options = {}) {
   const { filterKey, filterValue } = options;
   if (!filterKey || !filterValue || filterValue === "all") return items;
   return items.filter((i) => i.category === filterValue || i.type === filterValue);
+}
+
+function extractYouTubeId(url) {
+  const m = String(url).match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function youtubeThumbnail(url) {
+  const id = extractYouTubeId(url);
+  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
+}
+
+function getPrimaryVideoUrl(item) {
+  if (item.link && item.link !== "#" && extractYouTubeId(item.link)) return item.link;
+  const links = Array.isArray(item.links) ? item.links : [];
+  const videoLink = links.find((entry) => entry.type === "video" && entry.url && entry.url !== "#");
+  return videoLink ? videoLink.url : null;
+}
+
+function renderThumbnailHtml(url, title, className = "card__thumb") {
+  const thumb = youtubeThumbnail(url);
+  if (!thumb) return "";
+
+  const safeTitle = escapeHtml(title);
+  const safeUrl = escapeHtml(url);
+  const safeThumb = escapeHtml(thumb);
+
+  return `
+    <a href="${safeUrl}" class="${className}" target="_blank" rel="noopener" aria-label="Assistir: ${safeTitle}">
+      <img src="${safeThumb}" alt="Thumbnail: ${safeTitle}" loading="lazy" width="320" height="180">
+    </a>`;
 }
 
 window.FH.renderCardGrid = function (containerId, items, options = {}) {
@@ -32,13 +63,17 @@ window.FH.renderCardGrid = function (containerId, items, options = {}) {
   container.innerHTML = `<div class="card-grid">${list
     .map((item) => {
       const hasLink = item.link && item.link !== "#";
+      const isYouTube = hasLink && extractYouTubeId(item.link);
+      const thumbHtml = isYouTube ? renderThumbnailHtml(item.link, item.title) : "";
+
       return `
     <article class="card">
+      ${thumbHtml}
       <h3 class="card__title">${escapeHtml(item.title)}</h3>
       <p class="card__text">${escapeHtml(item.description)}</p>
       ${item.source ? `<p class="card__text text-muted">Por ${escapeHtml(item.source)}</p>` : ""}
       ${item.tag ? `<span class="tag">${escapeHtml(item.tag)}</span>` : ""}
-      ${hasLink ? `<a href="${escapeHtml(item.link)}" class="btn btn--sm btn--primary mt-md" target="_blank" rel="noopener">Acessar</a>` : ""}
+      ${hasLink ? `<a href="${escapeHtml(item.link)}" class="btn btn--sm btn--primary mt-md" target="_blank" rel="noopener">${isYouTube ? "Assistir no YouTube" : "Acessar"}</a>` : ""}
     </article>`;
     })
     .join("")}</div>`;
@@ -58,6 +93,11 @@ window.FH.renderCourseBlocks = function (containerId, items, options = {}) {
   container.innerHTML = `<div class="course-block-list">${list
     .map((item) => {
       const links = Array.isArray(item.links) ? item.links : [];
+      const primaryVideoUrl = getPrimaryVideoUrl(item);
+      const thumbHtml = primaryVideoUrl
+        ? renderThumbnailHtml(primaryVideoUrl, item.title, "course-block__thumb")
+        : "";
+
       const linksHtml = links
         .filter((entry) => entry.url && entry.url !== "#")
         .map((entry) => {
@@ -67,12 +107,17 @@ window.FH.renderCourseBlocks = function (containerId, items, options = {}) {
           const className = isCourse
             ? "course-link course-link--secondary"
             : "course-link course-link--video";
-          return `<a href="${escapeHtml(entry.url)}" class="${className}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
+          const miniThumb = isVideo && youtubeThumbnail(entry.url)
+            ? `<img class="course-link__thumb" src="${escapeHtml(youtubeThumbnail(entry.url))}" alt="" loading="lazy" width="48" height="36">`
+            : "";
+
+          return `<a href="${escapeHtml(entry.url)}" class="${className}" target="_blank" rel="noopener">${miniThumb}<span class="course-link__label">${escapeHtml(label)}</span></a>`;
         })
         .join("");
 
       return `
     <article class="course-block card">
+      ${thumbHtml}
       <h3 class="course-block__title">${escapeHtml(item.title)}</h3>
       <p class="course-block__text">${escapeHtml(item.description)}</p>
       ${item.source ? `<p class="course-block__source text-muted">Por ${escapeHtml(item.source)}</p>` : ""}

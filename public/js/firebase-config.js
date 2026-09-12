@@ -28,12 +28,62 @@ window.FH.storage = {
     }
   },
   set(key, value) {
-    localStorage.setItem(DEMO_PREFIX + key, JSON.stringify(value));
+    try {
+      localStorage.setItem(DEMO_PREFIX + key, JSON.stringify(value));
+      return true;
+    } catch {
+      return false;
+    }
   },
   remove(key) {
-    localStorage.removeItem(DEMO_PREFIX + key);
+    try {
+      localStorage.removeItem(DEMO_PREFIX + key);
+      return true;
+    } catch {
+      return false;
+    }
   },
 };
+
+window.FH.resetDemoData = function () {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(DEMO_PREFIX)) {
+      localStorage.removeItem(key);
+    }
+  }
+  if (typeof window.FH.clearCommunitiesCache === "function") {
+    window.FH.clearCommunitiesCache();
+  }
+};
+
+window.FH.clearDemoLogins = function () {
+  window.FH.storage.remove("users");
+  window.FH.storage.remove("currentUser");
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(DEMO_PREFIX + "profile_")) {
+      localStorage.removeItem(key);
+    }
+  }
+};
+
+(function consumeDemoQueryFlags() {
+  const search = window.location.search || "";
+  if (!/[?&]clearLogins(?:&|=|$)/.test(search) && !search.startsWith("?clearLogins")) {
+    return;
+  }
+  window.FH.clearDemoLogins();
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("clearLogins");
+    const query = url.searchParams.toString();
+    window.history.replaceState({}, "", url.pathname + (query ? "?" + query : "") + url.hash);
+  } catch {
+    /* file:// may block replaceState */
+  }
+  console.info("FEMHELP: logins de teste apagados.");
+})();
 
 async function initFirebase() {
   const config = window.FH.firebaseConfig;

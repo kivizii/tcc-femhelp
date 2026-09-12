@@ -2,31 +2,139 @@
   "videos": [
     {
       "title": "Como trocar o gás com segurança",
-      "description": "Passo a passo para substituir o botijão sem riscos.",
+      "description": "Passo a passo para substituir o botijão, testar vazamento e evitar acidentes.",
       "category": "Manutenção",
       "tag": "Casa",
-      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      "source": "Fogás · YouTube",
+      "link": "https://www.youtube.com/watch?v=6K0Q3NRIcyM"
     },
     {
-      "title": "Desentupir pia simples",
-      "description": "Técnicas básicas com itens do dia a dia.",
+      "title": "Limpar filtro do ar-condicionado",
+      "description": "Manutenção preventiva: remover, lavar e recolocar os filtros com segurança.",
+      "category": "Manutenção",
+      "tag": "Casa",
+      "source": "LG · YouTube",
+      "link": "https://www.youtube.com/watch?v=mGFRLWmBbgo"
+    },
+    {
+      "title": "Chuveiro pingando? Troque o vedante",
+      "description": "Resolva vazamentos no registro do chuveiro com uma peça de reposição barata.",
+      "category": "Manutenção",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=V5mjMGZPH74"
+    },
+    {
+      "title": "Trocar vedante do registro do chuveiro",
+      "description": "Identifique o vedante gasto e faça a substituição com as ferramentas certas.",
+      "category": "Manutenção",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=UOjuoVEY02g"
+    },
+    {
+      "title": "Desentupir pia com bomba desentupidora",
+      "description": "Técnicas práticas para liberar o ralo sem precisar de encanador.",
       "category": "Reparos",
       "tag": "Casa",
-      "link": "#"
+      "source": "Vonder · YouTube",
+      "link": "https://www.youtube.com/watch?v=PbBu4JbtNgc"
     },
     {
-      "title": "Verificar fechadura da porta",
-      "description": "Checklist de segurança para sua casa.",
+      "title": "Consertar torneira pingando",
+      "description": "Troque o reparo do registro e pare o vazamento em poucos minutos.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=BwhLs9TSttU"
+    },
+    {
+      "title": "Trocar reparo de torneira Docol",
+      "description": "Passo a passo para substituir o mecanismo interno de torneiras modernas.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=eCRnFc-O7ns"
+    },
+    {
+      "title": "Instalar prateleiras em casa",
+      "description": "Projeto prático com suportes e montagem de prateleiras para organizar o espaço.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=ETm8CjsSXec"
+    },
+    {
+      "title": "Consertar buraco em camiseta",
+      "description": "Costura simples à mão para fechar pequenos furos sem jogar a roupa fora.",
+      "category": "Reparos",
+      "tag": "Casa",
+      "source": "Katy Ateliê · YouTube",
+      "link": "https://www.youtube.com/watch?v=H3HiXiNKebI"
+    },
+    {
+      "title": "Trocar cilindro da fechadura",
+      "description": "Verifique e substitua o miolo da fechadura para reforçar a segurança da porta.",
       "category": "Segurança",
       "tag": "Proteção",
-      "link": "#"
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=eYk42LdXBys"
+    },
+    {
+      "title": "Como usar extintor de incêndio",
+      "description": "Aprenda a posição correta, a distância segura e o movimento para apagar o fogo.",
+      "category": "Segurança",
+      "tag": "Proteção",
+      "source": "Socorrista Alexandre Santos · YouTube",
+      "link": "https://www.youtube.com/watch?v=LkzZeOzxEMI"
+    },
+    {
+      "title": "Retirar miolo da fechadura",
+      "description": "Dicas para desmontar fechaduras embutidas e verificar o estado do mecanismo.",
+      "category": "Segurança",
+      "tag": "Proteção",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=R2OKoNHQuII"
+    },
+    {
+      "title": "Por que limpar filtros do ar-condicionado",
+      "description": "Entenda como a manutenção mensal melhora a qualidade do ar e reduz o consumo.",
+      "category": "Segurança",
+      "tag": "Proteção",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=4FQ9u-RKGRM"
     },
     {
       "title": "Trocar lâmpada com segurança",
-      "description": "Desligue a energia e siga estes passos.",
-      "category": "Reparos",
+      "description": "Técnicas para substituir lâmpadas em locais altos sem escada e sem risco.",
+      "category": "Elétrica básica",
       "tag": "Casa",
-      "link": "#"
+      "source": "Engehall Elétrica · YouTube",
+      "link": "https://www.youtube.com/watch?v=VKs7svc8H4g"
+    },
+    {
+      "title": "Introdução à segurança elétrica",
+      "description": "Conceitos essenciais da NR10: riscos, choque elétrico e medidas de proteção.",
+      "category": "Elétrica básica",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=P0mvA02eh6o"
+    },
+    {
+      "title": "Trocar resistência do chuveiro",
+      "description": "Desligue o disjuntor, substitua a resistência e teste com água antes de ligar.",
+      "category": "Elétrica básica",
+      "tag": "Casa",
+      "source": "Lorenzetti · YouTube",
+      "link": "https://www.youtube.com/watch?v=kBTpK2wNd_c"
+    },
+    {
+      "title": "Bloqueio e sinalização elétrica (LOTO)",
+      "description": "Procedimentos de segurança antes de mexer em tomadas, interruptores ou fiação.",
+      "category": "Elétrica básica",
+      "tag": "Casa",
+      "source": "YouTube",
+      "link": "https://www.youtube.com/watch?v=r4aL4HbG8hQ"
     }
   ],
   "cursos": [
@@ -41,6 +149,16 @@
         {
           "label": "Assistir no YouTube",
           "url": "https://www.youtube.com/watch?v=4F4-jFOigYI",
+          "type": "video"
+        },
+        {
+          "label": "O que é a B3 e a bolsa de valores",
+          "url": "https://www.youtube.com/watch?v=V0yXw5Xi9YY",
+          "type": "video"
+        },
+        {
+          "label": "Programa Nascer: ideia em negócio",
+          "url": "https://www.youtube.com/watch?v=Rissw5H413k",
           "type": "video"
         },
         {
@@ -69,6 +187,21 @@
           "type": "video"
         },
         {
+          "label": "Curso de HTML e CSS — Aula 1",
+          "url": "https://www.youtube.com/watch?v=bCFTv8a59PE",
+          "type": "video"
+        },
+        {
+          "label": "Primeiro projeto front-end do zero",
+          "url": "https://www.youtube.com/watch?v=k6DSb61nCFk",
+          "type": "video"
+        },
+        {
+          "label": "Lógica de programação para iniciantes",
+          "url": "https://www.youtube.com/watch?v=coEfg14mnjk",
+          "type": "video"
+        },
+        {
           "label": "Ver formação completa",
           "url": "https://www.programaria.org/cursos-programaria/front-end-primeira-pagina-web/",
           "type": "course"
@@ -92,6 +225,16 @@
           "label": "Autonomia financeira feminina",
           "url": "https://www.youtube.com/watch?v=8_PTjzu-KCI",
           "type": "video"
+        },
+        {
+          "label": "Planejamento financeiro para mulheres",
+          "url": "https://www.youtube.com/watch?v=SezEehbzJ3I",
+          "type": "video"
+        },
+        {
+          "label": "O que são ações e ETFs",
+          "url": "https://www.youtube.com/watch?v=N7ktGzA18hk",
+          "type": "video"
         }
       ]
     },
@@ -109,8 +252,18 @@
           "type": "video"
         },
         {
+          "label": "Defesa pessoal: distância segura",
+          "url": "https://www.youtube.com/watch?v=GSSajkTBekw",
+          "type": "video"
+        },
+        {
           "label": "Mais técnicas de autodefesa",
           "url": "https://www.youtube.com/watch?v=LJa1OafIjjk",
+          "type": "video"
+        },
+        {
+          "label": "Técnicas de jiu-jitsu com Kyra Gracie",
+          "url": "https://www.youtube.com/watch?v=3xh97SzGkpU",
           "type": "video"
         }
       ]
@@ -131,6 +284,16 @@
         {
           "label": "Histórias de empreendedoras",
           "url": "https://www.youtube.com/watch?v=G1uiRZ6UpZE",
+          "type": "video"
+        },
+        {
+          "label": "Empreendedorismo feminino no Brasil",
+          "url": "https://www.youtube.com/watch?v=tahKjOnq7Nk",
+          "type": "video"
+        },
+        {
+          "label": "Programa Nascer: transforme sua ideia",
+          "url": "https://www.youtube.com/watch?v=Rissw5H413k",
           "type": "video"
         },
         {
@@ -156,6 +319,21 @@
         {
           "label": "Mulheres na tecnologia",
           "url": "https://www.youtube.com/watch?v=v0v0-fgjNFg",
+          "type": "video"
+        },
+        {
+          "label": "Introdução à programação",
+          "url": "https://www.youtube.com/watch?v=G5OLtuHulhU",
+          "type": "video"
+        },
+        {
+          "label": "HTML e CSS — estrutura básica",
+          "url": "https://www.youtube.com/watch?v=bCFTv8a59PE",
+          "type": "video"
+        },
+        {
+          "label": "Lógica de programação",
+          "url": "https://www.youtube.com/watch?v=coEfg14mnjk",
           "type": "video"
         }
       ]

@@ -16,6 +16,8 @@
     depth,
   };
 
+  const ASSET_VERSION = "26";
+
   const favicon = document.createElement("link");
   favicon.rel = "icon";
   favicon.type = "image/svg+xml";
@@ -26,7 +28,7 @@
   styles.forEach((href) => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = root + href;
+    link.href = `${root}${href}?v=${ASSET_VERSION}`;
     document.head.appendChild(link);
   });
 
@@ -36,7 +38,7 @@
   const loadScript = (src) =>
     new Promise((resolve, reject) => {
       const el = document.createElement("script");
-      el.src = root + src;
+      el.src = `${root}${src}?v=${ASSET_VERSION}`;
       el.onload = resolve;
       el.onerror = reject;
       document.head.appendChild(el);
@@ -48,12 +50,16 @@
     "js/nav.js",
     "js/quick-exit.js",
     "js/auth.js",
+    "js/profile.js",
   ];
 
   (async () => {
     try {
       for (const src of coreScripts) {
         await loadScript(src);
+      }
+      if (extraScripts.some((src) => src.includes("communities.js"))) {
+        await loadScript("js/communities-fallback.js");
       }
       for (const src of extraScripts) {
         try {
@@ -62,10 +68,18 @@
           console.error(`FEMHELP: falha ao carregar ${src}`, err);
         }
       }
-      if (typeof window.FH.onReady === "function") {
-        window.FH.onReady();
+      const notifyReady = () => {
+        if (typeof window.FH.onReady === "function") {
+          window.FH.onReady();
+        }
+        document.dispatchEvent(new CustomEvent("femhelp:ready"));
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", notifyReady, { once: true });
+      } else {
+        notifyReady();
       }
-      document.dispatchEvent(new CustomEvent("femhelp:ready"));
     } catch (err) {
       console.error("FEMHELP bootstrap error:", err);
     }

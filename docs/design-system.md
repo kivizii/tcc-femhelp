@@ -240,7 +240,22 @@ Bootstrap: `<script src="js/bootstrap.js" data-depth="N"></script>` onde `N` = n
 
 - Dados em `public/data/content.json` — chaves `videos`, `cursos` e `empregos`.
 - Telas em `public/content/` renderizam cards via `js/content.js` (`FH.initContentPage`).
-- **Cursos gratuitos:** 6 blocos (`.course-block`) alinhados às áreas do plano do TCC. Cada item em `content.json` pode ter `links[]` com `label`, `url` e `type` (`video` ou `course`). O layout exibe botões em bloco: primário **Assistir vídeo** (`.course-link--video`) e secundário **Ver formação completa** (`.course-link--secondary`). Campo `source` exibe a instituição. `FH.renderCourseBlocks` é usado só na página de cursos; vídeos e empregos usam `renderCardGrid`.
+- **Vídeos do dia a dia:** ~17 itens em `videos[]`, categorias `Manutenção`, `Reparos`, `Segurança` e `Elétrica básica`. Cada item tem `title`, `description`, `category`, `tag`, `source` (opcional) e `link` (URL do YouTube). Cards exibem thumbnail 16:9 (`.card__thumb`) derivada automaticamente do ID do vídeo (`img.youtube.com/vi/{id}/mqdefault.jpg`) e botão **Assistir no YouTube**.
+- **Cursos gratuitos:** 6 blocos (`.course-block`) alinhados às áreas do plano do TCC, cada um com 4–6 links de vídeo no YouTube. Cada item em `content.json` pode ter `links[]` com `label`, `url` e `type` (`video` ou `course`). O bloco exibe thumbnail do vídeo principal (`.course-block__thumb`) e botões com mini-thumbnail nos links de vídeo (`.course-link--video`) ou secundário **Ver formação completa** (`.course-link--secondary`). Campo `source` exibe a instituição. `FH.renderCourseBlocks` é usado só na página de cursos; vídeos e empregos usam `renderCardGrid`.
+
+### Chat feminino
+
+- Dados em `public/data/communities.json` — salas com `seedMessages[]` (conversas demonstrativas entre mulheres fictícias).
+- Lógica em `public/js/chat.js` (`FH.initChatPage`) e painel de salas em `public/js/communities.js`.
+- **Login obrigatório** para acessar `community/chat.html` (`FH.requireAuth`).
+- **Demo fixo:** `seedMessages` vêm sempre do JSON e não são sobrescritas no `localStorage`.
+- **Fallback embutido:** se o JSON falhar ao carregar, `chat.js` usa conversas de reserva (sala `amizade`) para não exibir chat vazio.
+- **Mensagens da usuária:** persistidas em `chat_user_{roomId}`; ao renderizar, demo + usuária são mescladas. Chaves legadas `chat_messages_*` são removidas na migração.
+- Cada mensagem pode ter `author`, `text`, `time` (opcional) e `own` (`true` só para a usuária logada).
+- UI: `.message-list`, `.message-bubble--own` (lilás) / `.message-bubble--other` (bege), aviso `.chat-demo-notice`.
+- **Reset de dados de teste (modo demo):** em Configurações, botão **Apagar dados de teste** chama `FH.resetDemoData()` e apaga todas as chaves `femhelp_demo_*` (contas, chat, contatos, mural, SOS).
+- **Console (alternativa):** `Object.keys(localStorage).filter(k => k.startsWith("femhelp_demo_")).forEach(k => localStorage.removeItem(k))`
+- **Fluxo de demonstração (TCC):** Configurações → Apagar dados de teste → cadastrar conta nova → abrir sala (ex.: `?room=amizade`) → ver 10 mensagens fictícias → enviar mensagem → recarregar e confirmar que demo + mensagem própria persistem.
 
 ### Autenticação
 

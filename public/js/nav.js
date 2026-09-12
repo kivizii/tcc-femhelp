@@ -43,9 +43,12 @@
     const header = document.createElement("header");
     header.className = "app-header";
     header.innerHTML = `
-      <a href="${window.FH.asset("index.html")}" class="app-header__brand">
-        <img src="${window.FH.asset("assets/logo/femhelp-wordmark.svg")}" alt="FEMHELP" class="app-header__logo" width="120" height="28">
-      </a>
+      <div class="app-header__start">
+        <div id="header-avatar-slot"></div>
+        <a href="${window.FH.asset("index.html")}" class="app-header__brand">
+          <img src="${window.FH.asset("assets/logo/femhelp-wordmark.svg")}" alt="FEMHELP" class="app-header__logo" width="120" height="28">
+        </a>
+      </div>
       <div id="header-auth-slot"></div>
     `;
     document.body.insertBefore(header, document.body.firstChild);

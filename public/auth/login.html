@@ -79,7 +79,17 @@
           await window.FH.login({ cpf, email, password });
           const params = new URLSearchParams(window.location.search);
           const redirect = params.get("redirect");
-          window.location.href = redirect || window.FH.asset("index.html");
+          if (redirect) {
+            if (redirect.startsWith("http://") || redirect.startsWith("https://")) {
+              window.location.href = redirect;
+            } else if (redirect.startsWith("/")) {
+              window.location.href = redirect;
+            } else {
+              window.location.href = window.FH.asset(redirect);
+            }
+          } else {
+            window.location.href = window.FH.asset("index.html");
+          }
         } catch (err) {
           errEl.textContent = err.message || "Erro ao entrar.";
           errEl.classList.remove("hidden");
