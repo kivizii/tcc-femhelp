@@ -18,7 +18,7 @@ Abra `http://localhost:3000`. O app roda em **modo demonstração** com `localSt
 
 ## Deploy
 
-- **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`.
+- **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`. URL: https://kivizii.github.io/tcc-femhelp/ (requer Pages habilitado em Settings → Source: GitHub Actions).
 - **Firebase Hosting:** `firebase deploy --only hosting` (requer Firebase CLI e projeto configurado).
 
 ## Sumário

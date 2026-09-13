@@ -18,6 +18,11 @@
 
   const ASSET_VERSION = "26";
 
+  const robots = document.createElement("meta");
+  robots.name = "robots";
+  robots.content = "noindex, nofollow, noarchive";
+  document.head.appendChild(robots);
+
   const favicon = document.createElement("link");
   favicon.rel = "icon";
   favicon.type = "image/svg+xml";
