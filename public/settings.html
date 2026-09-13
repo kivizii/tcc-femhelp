@@ -28,6 +28,22 @@
       </div>
     </section>
 
+    <section id="settings-demo-migrate" class="settings-group hidden" aria-labelledby="settings-demo-migrate-title">
+      <h2 class="section-title" id="settings-demo-migrate-title">Dados demo</h2>
+      <p class="text-muted settings-demo-migrate__hint">
+        Exporte no localhost e importe aqui para levar sua conta e histórico para o site publicado.
+      </p>
+      <div class="settings-demo-migrate__actions">
+        <button type="button" class="btn btn--secondary btn--block" id="btn-export-demo">
+          Exportar dados deste navegador
+        </button>
+        <label class="btn btn--ghost btn--block mt-sm" for="btn-import-demo-file">
+          Importar backup JSON
+        </label>
+        <input type="file" id="btn-import-demo-file" accept="application/json,.json" hidden>
+      </div>
+    </section>
+
     <section class="settings-group" aria-labelledby="settings-conta-title">
       <h2 class="section-title" id="settings-conta-title">Conta</h2>
       <ul class="settings-list">
@@ -165,6 +181,9 @@
       const cpfEl = document.getElementById("settings-user-cpf");
       const logoutBtn = document.getElementById("btn-logout");
       const resetDemoBtn = document.getElementById("btn-reset-demo");
+      const demoMigrateSection = document.getElementById("settings-demo-migrate");
+      const exportDemoBtn = document.getElementById("btn-export-demo");
+      const importDemoInput = document.getElementById("btn-import-demo-file");
       const avatarWrap = document.getElementById("settings-avatar-wrap");
       const avatarInput = document.getElementById("settings-avatar-input");
       const changePhotoBtn = document.getElementById("settings-change-photo");
@@ -175,8 +194,40 @@
         avatarWrap.innerHTML = window.FH.getAvatarMarkup(currentUser, "lg");
       }
 
-      if (window.FH.demoMode && resetDemoBtn) {
-        resetDemoBtn.classList.remove("hidden");
+      if (window.FH.demoMode) {
+        if (resetDemoBtn) resetDemoBtn.classList.remove("hidden");
+        if (demoMigrateSection) demoMigrateSection.classList.remove("hidden");
+      }
+
+      if (exportDemoBtn) {
+        exportDemoBtn.addEventListener("click", async () => {
+          try {
+            const { count, method } = await window.FH.copyDemoExport();
+            const msg =
+              method === "clipboard"
+                ? `Copiado! ${count} itens na área de transferência. Cole em Importar no site publicado.`
+                : `Download iniciado (${count} itens). Importe o arquivo no site publicado.`;
+            alert(msg);
+          } catch (err) {
+            alert(err.message || "Não foi possível exportar os dados.");
+          }
+        });
+      }
+
+      if (importDemoInput) {
+        importDemoInput.addEventListener("change", async () => {
+          const file = importDemoInput.files?.[0];
+          importDemoInput.value = "";
+          if (!file) return;
+          try {
+            const json = await file.text();
+            const count = window.FH.importDemoData(json);
+            alert(`Importado: ${count} itens. A página vai recarregar.`);
+            location.reload();
+          } catch (err) {
+            alert(err.message || "Arquivo JSON inválido.");
+          }
+        });
       }
 
       if (user && profileSection) {

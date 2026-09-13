@@ -2123,6 +2123,17 @@ body[data-page="map"] .poi-card:hover {
 }
 
 /* Configurações */
+.settings-demo-migrate__hint {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-md);
+}
+
+.settings-demo-migrate__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
 .settings-profile {
   margin-bottom: var(--space-lg);
 }

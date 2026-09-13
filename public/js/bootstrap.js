@@ -16,7 +16,7 @@
     depth,
   };
 
-  const ASSET_VERSION = "26";
+  const ASSET_VERSION = "27";
 
   const robots = document.createElement("meta");
   robots.name = "robots";

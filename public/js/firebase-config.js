@@ -68,6 +68,53 @@ window.FH.clearDemoLogins = function () {
   }
 };
 
+/** Exporta todas as chaves demo do localStorage (mesma lógica do plano de migração). */
+window.FH.exportDemoData = function () {
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(DEMO_PREFIX)) {
+      data[key] = localStorage.getItem(key);
+    }
+  }
+  return JSON.stringify(data);
+};
+
+/** Importa JSON exportado; retorna quantidade de chaves gravadas. */
+window.FH.importDemoData = function (json) {
+  const data = JSON.parse(json);
+  let count = 0;
+  for (const [key, value] of Object.entries(data)) {
+    if (key.startsWith(DEMO_PREFIX)) {
+      localStorage.setItem(key, value);
+      count++;
+    }
+  }
+  return count;
+};
+
+/** Copia export para a área de transferência ou faz download. */
+window.FH.copyDemoExport = async function () {
+  const json = window.FH.exportDemoData();
+  const parsed = JSON.parse(json);
+  const count = Object.keys(parsed).length;
+  if (count === 0) {
+    throw new Error("Nenhum dado demo encontrado neste navegador.");
+  }
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(json);
+    return { count, method: "clipboard" };
+  }
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "femhelp-demo-backup.json";
+  link.click();
+  URL.revokeObjectURL(url);
+  return { count, method: "download" };
+};
+
 (function consumeDemoQueryFlags() {
   const search = window.location.search || "";
   if (!/[?&]clearLogins(?:&|=|$)/.test(search) && !search.startsWith("?clearLogins")) {
